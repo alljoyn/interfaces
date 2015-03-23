@@ -1,0 +1,21 @@
+﻿<node name="/org/allseen/SmartHome/SmartHomeService"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/extended-introspection.xsd">
+  <description language="en">AllJoyn Smart Home Service provides centralized management capabilities in smart home</description>
+  <interface name="org.allseen.SmartHome.ControlleeManager">
+    <description language="en">Enables the smart home controllee to join or leave the centralized management system</description>
+    <property name="Version" type="q" access="read"/>
+    <method name="RegisterControllee">
+      <description language="en">Invoke this method to join the centralized management system</description>
+      <arg name="wellKnownName " type="s" direction="in"/>
+      <arg name="uniqueName" type="s" direction="in"/>
+      <arg name="deviceId" type="s" direction="in"/>
+      <arg name="objectPaths" type="ao" direction="in"/>
+    </method>
+    <method name="UnregisterControllee">
+      <description language="en">Invoke this method to leave the centralized management system</description>
+      <arg name="deviceId" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

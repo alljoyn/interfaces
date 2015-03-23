@@ -1,0 +1,41 @@
+﻿<node name="/org/allseen/SmartHome/SmartHomeService"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+   xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/extended-introspection.xsd">
+  <description language="en">AllJoyn Smart Home Service provides centralized management capabilities in smart home</description>
+  <interface name="org.allseen.SmartHome.CentralizedController">
+    <description language="en">Enables the smart home controller to control smart home controllees in the centralized management system</description>
+    <property name="Version" type="q" access="read"/>
+    <struct name="DeviceInfo">
+      <field name="deviceId" type="s"/>
+      <field name="wellknownName" type="s"/>
+      <field name="uniqueName" type="s"/>
+    </struct>
+    <property name="DeviceList" type="a[DeviceInfo]" access="read"/>
+    <struct name="InterfaceInfo">
+      <field name="objectPath" type="o"/>
+      <field name="interfaceName" type="as"/>
+    </struct>
+    <method name="QueryInterfaces">
+      <description language="en">Invoke this method to query the interface information of the smart home controllee</description>
+      <arg name="deviceId" type="s" direction="in"/>
+      <arg name="interfaceInfo" type="a[InterfaceInfo]" direction="out"/>
+    </method>
+    <method name="InvokeDeviceAction">
+      <description language="en">Invoke this method to call the method of the smart home controllee through the smart home server</description>
+      <arg name="deviceId" type="s" direction="in"/>
+      <arg name="objectPath" type="o" direction="in"/>
+      <arg name="interfaceName" type="s" direction="in"/>
+      <arg name="methodName" type="s" direction="in"/>
+      <arg name="arguments" type="v" direction="in"/>
+      <arg name="invocationId" type="u" direction="out"/>
+    </method>
+    <signal name="InvokeDeviceActionReturnValue" sessionless="false">
+      <description language="en">Return the status and value of the smart home controllee method call</description>
+      <arg name="methodName" type="s"/>
+      <arg name="returnStatus" type="s"/>
+      <arg name="returnValue" type="v"/>
+      <arg name="invocationId" type="u"/>
+    </signal>
+  </interface>
+</node>

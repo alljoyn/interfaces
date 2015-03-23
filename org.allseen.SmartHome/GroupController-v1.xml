@@ -1,0 +1,43 @@
+﻿<node name="/org/allseen/SmartHome/SmartHomeService"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+  xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/extended-introspection.xsd">
+  <description language="en">AllJoyn Smart Home Service provides centralized management capabilities in smart home</description>
+  <interface name="org.allseen.SmartHome.GroupController">
+    <description language="en">Enables the smart home controller to invoke bunch of smart home controllees' actions in a group manner</description>
+    <property name="Version" type="q" access="read"/>
+    <struct name="GroupInfo">
+      <field name="groupName" type="s"/>
+      <field name="groupDescription" type="s"/>
+    </struct>
+    <property name="GroupList" type="a[GroupInfo]" access="read"/>
+    <struct name="GroupActionArgs">
+      <field name="deviceId" type="s"/>
+      <field name="objectPath" type="o"/>
+      <field name="interfaceName" type="s"/>
+      <field name="methodName" type="s"/>
+      <field name="methodArg" type="v"/>
+    </struct>
+    <method name="DefineGroupAction">
+      <description language="en">Invoke this method to create the group of smart home controllees' actions</description>
+      <arg name="groupName" type="s" direction="in"/>
+      <arg name="groupDescription" type="s" direction="in"/>
+      <arg name="groupActionArgs" type="a[GroupActionArgs]" direction="in"/>
+    </method>
+    <method name="InvokeGroupAction">
+      <description language="en">Invoke this method to control the group of smart home controllees' actions</description>
+      <arg name="groupName" type="s" direction="in"/>
+    </method>
+    <method name="DeleteGroupAction">
+      <description language="en">Invoke this method to delete the group of smart home controllees' actions</description>
+      <arg name="groupName" type="s" direction="in"/>
+    </method>
+    <signal name="InvokeGroupActionReturnValue" sessionless="false">
+      <arg name="groupName" type="s"/>
+      <arg name="deviceId" type="s"/>
+      <arg name="methodName" type="s"/>
+      <arg name="returnStatus" type="s"/>
+      <arg name="value" type="v"/>
+    </signal>
+  </interface>
+</node>
