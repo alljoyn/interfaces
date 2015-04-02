@@ -27,7 +27,8 @@ Board before they can be added to this repository. The submission procedure is
 fairly simple:
 
 * create a textual description of the interface following the template provided
-  in extra/interface-definition-template.md
+  in extra/interface-definition-template.md . Make sure to follow the
+  formatting guidelines as described in the template!
 * create a formal XML description of the interface
 * add both to this repository in the appropriate place (see the Structure
   section)
