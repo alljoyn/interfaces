@@ -1,5 +1,32 @@
 # org.allseen.Foo.Bar version 1
 
+## Formatting Guidelines
+
+[This section is here for the benefit of Interface Definition authors. Delete
+it in your final document.]
+
+In order to facilitate the review process and the production of publishable
+documentation, we ask that you adhere to the following guidelines:
+
+  * The interface definition documents must be valid markdown. This handy
+    [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+    provides a quick reference. Ultimately, the end goal is to process the
+    interface definition documents with the AllSeen
+    [documentation tools](https://git.allseenalliance.org/gerrit/#/admin/projects/extras/webdocs).
+    The Allseen documentation repository contains more explanations and tools
+    for creating valid markdown documents.
+  * Limit text-only lines to 80 characters. Use hard newlines (do not rely on
+    your editor's word wrap). Tables and preformatted text (e.g., XML or code 
+    fragments) may exceed the 80 character limit.
+  * The character encoding for the markdown files is 7-bit ASCII, not UTF-8 or
+    any other Unicode variant or code page. This is of particular importance if
+    you're importing text that was previously created in a word processor like
+    Microsoft Word. Word processors typically replace plain quotes and dashes
+    with "smart" equivalents (opening and closing quotes, em-dashes). These
+    smart equivalents are _not_ part of the allowed character set.
+  * Supporting visuals (architecture diagrams, sequence diagrams) should be
+    included as separate images in PNG format.
+
 ## Theory of Operation
 
 [If you are defining multiple interfaces that belong together, split the Theory
@@ -86,8 +113,8 @@ Errors raised by this method:
 | Introduced in version | n (only add this line for n > 1)            |
 | Annotation            | org.freedesktop.DBus.Method.NoReply = true  |
 
-Description of the method. It does nothing, there are no inputs, no replies and no
-errors. So we can leave out all those sections below.
+Description of the method. It does nothing, there are no inputs, no replies and
+no errors. So we can leave out all those sections below.
 
 ### Signals
 
@@ -150,8 +177,9 @@ flow, that would overburden the Theory of Operation section.
 
 ## References
 
-In this section, list references for the Interface definition (standards, RFCs, related interfaces, etc.).
-Make sure to include at least the following references:
+In this section, list references for the Interface definition (standards, RFCs,
+related interfaces, etc.). Make sure to include at least the following
+references:
 
   * the formal XML definition of the Interface described in this document
   * the Theory of Operation document, if you decided to split it off
