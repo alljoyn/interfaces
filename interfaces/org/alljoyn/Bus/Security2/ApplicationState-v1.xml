@@ -1,0 +1,56 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+    <interface name="org.alljoyn.Bus.Security2.ApplicationState">
+        <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+        <description> The interface provided by all security 2.0 applications
+            for discovery purposes.</description>
+
+        <struct name="PublicKey">
+            <description>A struct providing the details of an Elliptic Curve
+                public key.</description>
+            <field name="algorithm" type="y">
+                <description>
+                    An enumeration describing the key type:
+                      0: ECDSA with SHA256
+                </description>
+            </field>
+            <field name="curveIdentifier" type="y">
+                <description>
+                    An Enumeration identifying the curve this key is using.
+                      0: NIST P-256
+                </description>
+            </field>
+            <field name="xCoordinate" type="ay">
+                <description>The X coordinate of the public key.</description>
+            </field>
+            <field name="yCoordinate" type="ay">
+                <description>The Y coordinate of the public key.</description>
+            </field>
+        </struct>
+
+        <property name="Version" access="read" type="q">
+            <description>The Interface version.</description>
+        </property>
+        <signal name="State" sessionless="true">
+            <description> The State signal is used to advertise the state of an
+                application.  It is sessionless, because the signal is intended
+                to discover the applications.
+            </description>
+            <arg name="publicKey" type="[PublicKey]">
+                <description>The public key used by this application to identify itself</description>
+            </arg>
+            <arg name="claimableState" type="y">
+                <description> An enumeration representing the current state
+                    of the application.  Values:
+                      0: Not claimable.  The application is not claimed and not
+                         accepting claim request.
+                      1: Claimable. The application is not claimed, but is
+                         accepting claim request.
+                      2: Claimed. The application is claimed and can be configured.
+                      3: Update. The application is claimed, but requires a
+                         configuration update (after a software upgrade)
+                </description>
+            </arg>
+        </signal>
+    </interface>
+</node>
+
