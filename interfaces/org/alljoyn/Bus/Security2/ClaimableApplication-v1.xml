@@ -1,0 +1,111 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+        <!-- The ClaimableApplication interface is provided by security 2.0 application who
+            are in the claimable state.
+        -->
+        <interface name="org.alljoyn.Bus.Security2.ClaimableApplication">
+        <annotation name="org.alljoyn.Bus.Secure" value="on"/>
+
+        <!-- A struct providing the details of an Elliptic Curve public key.-->
+        <struct name="PublicKey">
+            <!-- An enumeration describing the key type:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An Enumeration identifying the curve this key is using.
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <struct name="Guid">
+            <!-- The Guid represented as a byte array.
+                TODO: How are these bytes ordered?-->
+            <field name="guidData" type="ay"/>
+        </struct>
+
+        <struct name="Certificate">
+            <!-- An enumeration representing the encoding of the
+                certificate data. Values:
+                  0: a X.509 DER encoded certificate.
+                  1: a X.509 PEM encoded certificate.
+            -->
+            <field name="encoding" type="q"/>
+            <field name="certificateData" type="ay"/>
+        </struct>
+
+        <!-- A struct describing a member of an interface
+             and the access rights on it.
+        -->
+        <struct name="Member">
+            <!-- The name of the interface member. The '*' matches
+                all members of type.
+            -->
+            <field name="name" type="s"/>
+            <!-- An Enumeration describing the type of the member. Values:
+                  0: Any type.
+                  1: Method.
+                  2: Signal
+                  3: property
+            -->
+            <field name="type" type="y"/>
+            <!-- An bitmask describing the action on the member. Values:
+                  0x1: Denied. Access on this member is explicit denied
+                  0x2: Provide. Allows sending signals and/or exposing
+                       methods and properties.
+                  0x4: Observe: Allows receiving signals and read properties.
+                  0x8: Modify: allows to set properties and to make method
+                       calls.
+            -->
+            <field name="action" type="y"/>
+        </struct>
+
+        <struct name="Rule">
+            <!-- contains the object path on which the rule applies.
+                An empty object path is allowed. In that case the rules apply
+                on all matching interfaces.
+            -->
+            <field name="objectPath" type="s"/>
+            <!-- contains the interface name on which the rule applies.
+                An empty interfaceName is allowed, if the objectPath is set.
+                The '*' character is allowed at the end of the interface name.
+                The interface name is then considered a prefix. The rule
+                applies to all interfaces names starting with the prefix.
+            -->
+            <field name="interfaceName" type="s"/>
+            <field name="members" type="a[Member]"/>
+        </struct>
+
+        <!-- The Interface version.-->
+        <property name="Version" access="read" type="q"/>
+
+        <!-- Claim the application, providing it an identity
+            certificate along with a set of permissions. A security group
+            identity is passed. Members of this group are allowed to
+            manage the application.
+        -->
+        <method name="Claim">
+            <arg name="certificateAuthority" type="[PublicKey]" direction="in"/>
+            <arg name="adminSecurityGroupID" type="[Guid]" direction="in"/>
+            <arg name="adminSecurityGroupAuthority" type="[PublicKey]" direction="in"/>
+            <arg name="identityCertificateChain" type="a[Certificate]" direction="in"/>
+            <arg name="manifest" type="a[Rule]" direction="in"/>
+        </method>
+
+        <!-- Queries the application for it supported claim schemes.
+            The capabilities are expressed via a bit mask. Values:
+              0x01: claiming via ECDHE_NULL supported.
+              0x02: claiming via ECDHE_PSK with security manager generated
+                    passphrase supported.
+              0x04: claiming via ECDHE_PSK with application generated
+                    passphrase supported.
+        -->
+        <method name="GetClaimCapabilities">
+            <arg name="capabilities" type="i" direction="out"/>
+        </method>
+    </interface>
+</node>
+
