@@ -1,0 +1,204 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+        <!-- Once an application is claimed it becomes manageable.
+            The ManagedApplication interface describes the API for the
+            SecurityManager to update the application's security configuration.
+        -->
+        <interface name="org.alljoyn.Bus.Security2.ManagedApplication">
+        <annotation name="org.alljoyn.Bus.Secure" value="on"/>
+
+        <!-- A struct providing the details of an Elliptic Curve public key.-->
+        <struct name="PublicKey">
+            <!-- An enumeration describing the key type:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An Enumeration identifying the curve this key is using.
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <struct name="Guid">
+            <!-- The Guid represented as a byte array.
+                TODO: How are these bytes ordered?-->
+            <field name="guidData" type="ay"/>
+        </struct>
+
+        <struct name="Certificate">
+            <!-- An enumeration representing the encoding of the
+                certificate data. Values:
+                  0: a X.509 DER encoded certificate.
+                  1: a X.509 PEM encoded certificate.
+            -->
+            <field name="encoding" type="q"/>
+            <field name="certificateData" type="ay"/>
+        </struct>
+
+        <!-- A struct describing a member of an interface
+             and the access rights on it.
+        -->
+        <struct name="Member">
+            <!-- The name of the interface member. The '*' matches
+                all members of the type specified by the type field.
+            -->
+            <field name="name" type="s"/>
+            <!-- An Enumeration describing the type of the member. Values:
+                  0: Any type.
+                  1: Method.
+                  2: Signal
+                  3: property
+            -->
+            <field name="type" type="y"/>
+            <!-- A bitmask describing the action on the member. Values:
+                  0x1: Denied. Access on this member is explicitly denied
+                  0x2: Provide. Allows sending signals and/or exposing
+                       methods and properties.
+                  0x4: Observe: Allows receiving signals and reading properties.
+                  0x8: Modify: Allows setting properties and making method
+                       calls.
+            -->
+            <field name="action" type="y"/>
+        </struct>
+
+        <struct name="Rule">
+            <!-- contains the object path on which the rule applies.
+                An empty object path is allowed. In that case the rules apply
+                on all matching interfaces.
+            -->
+            <field name="objectPath" type="s"/>
+            <!-- contains the interface name on which the rule applies.
+                An empty interfaceName is allowed, if the objectPath is set.
+                The '*' character is allowed at the end of the interface name.
+                The interface name is then considered a prefix. The rule
+                applies to all interfaces names starting with the prefix.
+            -->
+            <field name="interfaceName" type="s"/>
+            <field name="members" type="a[Member]"/>
+        </struct>
+
+        <struct name="Peer">
+            <!-- An enumeration describing the type of peer. Values:
+                  0: Anonymous: matches all peers.
+                  1: Any: matches all peers trusted by the application.
+                  2: Restricted: Matches all peers with certificates of a
+                     the specified certificate authority.
+                  3: Public key: a single peer identified by a public key.
+                  4: Security group: all members of specific security group.
+            -->
+            <field name="type" type="q"/>
+            <!-- zero or one key depending on the peer type.
+                  Anonymous: no key required.
+                  Any:: No key required
+                  Restricted: The public key of certificate authority.
+                  Public key: the public key of the peer.
+                  Security group: the public key of the security group authority.
+            -->
+            <field name="publicKey" type="a[PublicKey]"/>
+            <!-- only need for the security group type. Ignored for the other types. -->
+            <field name="groupID" type="[Guid]"/>
+        </struct>
+
+        <struct name="Acl">
+            <field name="peers" type="a[Peer]"/>
+            <field name="rules" type="a[Rule]"/>
+        </struct>
+
+        <struct name="Policy">
+            <field name="specificationVersion" type="q"/>
+            <field name="version" type="u"/>
+            <field name="Acls" type="a[Acl]"/>
+        </struct>
+
+        <!-- The Interface version.-->
+        <property name="Version" access="read" type="y"/>
+
+        <!-- Resets the managed application. All configuration is
+            discarded. The application is no longer claimed.
+        -->
+        <method name="Reset"/>
+
+        <method name="UpdateIdentity">
+            <!-- A certificate chain. The first element is the
+                identity certificate of this application. Followed by
+                certificate of its issuer...
+            -->
+            <arg name="certificateChain" type="a[Certificate]" direction="in"/>
+            <!-- The permission this application can use. These
+                permissions should match the manifest template of the application.
+            -->
+            <arg name="manifest" type="a[Rule]" direction="in"/>
+        </method>
+
+        <method name="GetIdentity">
+            <!-- A certificate chain. The first element is the
+                identity certificate of this application. Followed by
+                certificate of its issuer...
+            -->
+            <arg name="certificateChain" type="a[Certificate]" direction="out"/>
+        </method>
+
+        <!-- TODO: Should we merge this with GetIdentity? -->
+        <method name="GetManifest">
+            <arg name="manifest" type="a[Rule]" direction="out"/>
+        </method>
+
+        <!-- A utility method to quickly check which identity
+            certificate is currently installed, without requiring to retreive
+            the certificate.
+        -->
+        <method name="GetIdentityCertificateSerialNumber">
+            <arg name="serialNumber" type="ay" direction="out"/>
+            <arg name="issuer" type="[PublicKey]" direction="out"/>
+        </method>
+
+        <!-- A property providing the version number of the currently
+            installed policy. This property is not evented.
+        -->
+        <property name="PolicyVersion" access="read" type="u"/>
+
+        <method name="UpdatePolicy">
+           <arg name="policy" type="[Policy]" direction="in"/>
+        </method>
+
+        <method name="GetPolicy">
+            <arg name="policy" type="[Policy]" direction="out"/>
+        </method>
+
+        <!-- Retrieve the default policy for this application,
+            regardless of the currently installed policy.
+        -->
+        <method name="GetDefaultPolicy">
+            <arg name="policy" type="[Policy]" direction="out"/>
+        </method>
+
+        <!-- Reset the policy to default policy generated during
+            the claiming process.
+        -->
+        <method name="ResetPolicy"/>
+
+        <method name="InstallMembership">
+            <!-- A certificate chain. The first element is the
+                identity certificate of this application. Followed by
+                certificate of its issuer...
+            -->
+            <arg name="certificateChain" type="a[Certificate]" direction="in"/>
+        </method>
+
+        <method name="RemoveMembership">
+            <arg name="serialNum" type="ay" direction="in"/>
+            <arg name="issuer" type="[PublicKey]" direction="in"/>
+        </method>
+
+        <!-- A utility method to retrieve the list of serial numbers
+            and issuers of the currently install membership certificates.
+        -->
+        <method name="GetMembershipSummaries">
+            <arg name="certificateSummaries" type="a[SecurityGroup]" direction="out"/>
+        </method>
+    </interface>
+</node>
+
