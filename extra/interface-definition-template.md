@@ -1,4 +1,4 @@
-# org.allseen.Foo.Bar version 1
+# org.alljoyn.example.Foo.Bar version 1
 
 ## Formatting Guidelines
 
@@ -105,7 +105,7 @@ Output arguments:
 
 Errors raised by this method:
 
- * org.allseen.Foo.Bar.Error.BazNotHome --- with some explanation if needed
+ * org.alljoyn.example.Foo.Bar.Error.BazNotHome --- with some explanation if needed
 
 #### DoNothing()
 
@@ -164,9 +164,9 @@ The method calls in this interface use the AllJoyn error message handling featur
 (`ER_BUS_REPLY_IS_ERROR_MESSAGE`) to set the error name and error message. The table
 below lists the possible errors raised by this interface.
 
-| Error name                             | Error message             |
-|----------------------------------------|---------------------------|
-| org.allseen.Foo.Bar.Error.BazNotHome   | Baz is not home.          |
+| Error name                                     | Error message             |
+|------------------------------------------------|---------------------------|
+| org.alljoyn.example.Foo.Bar.Error.BazNotHome   | Baz is not home.          |
 
 ## Examples
 
