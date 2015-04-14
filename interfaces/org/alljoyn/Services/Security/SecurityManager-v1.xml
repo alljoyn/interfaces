@@ -1,0 +1,118 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+    <!-- The SecurityManager interface contains the basics for discovering
+        security manager representatives in the local network. The interface
+        is deliberatly marked not secure. This is required so that security
+        managers can initiate communication even though they don't have a common
+        root of trust. But this also means that all communication over this
+        interface is suspectible to man-in-the-middle attacks or spoofing.
+    -->
+    <interface name="org.alljoyn.Services.Security.SecurityManager">
+        <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+
+        <!-- A struct providing the details of an Elliptic Curve Cryptography
+            public key.
+        -->
+        <struct name="EccPublicKey">
+            <!-- An enumeration describing the key type. Values:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An enumeration identifying the curve this key is using. Values:
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <struct name="Certificate">
+            <!-- An enumeration representing the encoding of the
+                certificate data. Values:
+                  0: an X.509 DER encoded certificate.
+                  1: an X.509 PEM encoded certificate.
+            -->
+            <field name="encoding" type="y"/>
+            <field name="certificateData" type="ay"/>
+        </struct>
+
+        <struct name="SecurityManagerIdentity">
+           <!-- The public key identifying the security manager. -->
+           <field name="managerPublicKey" type="[EccPublicKey]"/>
+           <!-- The certificate chain identifying the manager or an empty array
+                if the manager doesn't have a certificate or doesn't want to
+                share it.
+           -->
+           <field name="managerIdentityCertificateChain" type="a[Certificate]"/>
+       </struct>
+
+        <!-- The Interface version. -->
+        <property name="Version" access="read" type="q"/>
+
+       <!-- Retrieves the identity of the security manager this object represents.
+           A security manager is identified by its public key. Optionally a
+           self-singed certificate or a certificate chain can be returned as well to
+           provide extra information over the security manager.  If a 
+           certificate chain is it can lead up to a well-known root of trust.
+
+           Note: even if a security manager has certificates to prove its identity,
+           it is not obliged to return them in this call.
+       -->
+       <property name="Identity" access="read" type="SecurityManagerIdentity"/>
+
+       <!-- Ask this security manager to trust the security manager identified
+           by the public key and the optional certificate (chain). Typically this
+           request must be approved by the administrator. As this means user
+           interaction, we can't guarantee when a reply can be given. If this
+           is the case, the security manager send a response at a later stage
+           including the reply along with requestId. If the request is handled,
+           the reply will be signalled via the TrustRequestCompleted signal.
+           If the request is handled asynchronously, then it is important to
+           keep the session alive.
+           The returned requestId is only valid in the current session and
+           the TrustRequestCompleted signal will only be sent in this
+           session.
+       -->
+       <method name="RequestTrust">
+           <!-- The identity of the security manager asking to be trusted. -->
+           <arg name="managerIdentity" type="[SecurityManagerIdentity]" direction="in"/>
+           <!-- An enumeration describing the reply. Values:
+                 0: Request approved
+                 1: Request denied
+                 2: Request pending
+           -->
+           <arg name="reply" type="y" direction="out"/>
+           <!-- The requestId if the request is pending or 0 if the request
+                is approved or denied.
+                A requestId is only valid in the Alljoyn sessioni that sent the
+                request.
+           -->
+           <arg name="requestId" type="q" direction="out"/>
+       </method>
+
+       <method name="CancelTrustRequest">
+           <arg name="requestId" type="q" direction="in"/>
+       </method>
+
+       <!-- Checks the progress of trust request. Returns an Alljoyn error if
+           the requestId is not known.
+       -->
+       <method name="IsTrustRequestCompleted">
+           <arg name="requestId" type="q" direction="in"/>
+           <!-- an enumeration describing the reply. Values:
+                 0: Request approved.
+                 1: Request denied
+                 2: Request pending
+           -->
+           <arg name="requestProgess" type="y" direction="out"/>
+       </method>
+
+       <signal name="TrustRequestCompleted">
+           <arg name="requestId" type="q"/>
+           <!-- A Qstatus value indicating the result of the method call. -->
+            <arg name="status" type="q"/>
+       </signal>
+    </interface>
+</node>
+
