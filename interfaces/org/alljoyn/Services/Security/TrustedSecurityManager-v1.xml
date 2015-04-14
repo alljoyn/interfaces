@@ -1,0 +1,261 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+    <!-- This interface describes the operations one can do on a trusted
+        security manager.
+    -->
+    <interface name="org.alljoyn.Services.Security.TrustedSecurityManager">
+        <annotation name="org.alljoyn.Bus.Secure" value="on"/>
+
+        <!-- A struct providing the details of an Elliptic Curve Cryptography
+            public key.
+        -->
+        <struct name="EccPublicKey">
+            <!-- An enumeration describing the key type. Values:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An enumeration identifying the curve this key is using. Values:
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <struct name="Guid">
+            <!-- The GUID represented as a byte array. -->
+            <field name="guidData" type="ay"/>
+        </struct>
+
+        <struct name="Certificate">
+            <!-- An enumeration representing the encoding of the
+                certificate data. Values:
+                  0: an X.509 DER encoded certificate.
+                  1: an X.509 PEM encoded certificate.
+            -->
+            <field name="encoding" type="y"/>
+            <field name="certificateData" type="ay"/>
+        </struct>
+
+        <!-- A struct describing a member of an interface
+             and the access rights on it.
+        -->
+        <struct name="Member">
+            <!-- The name of the interface member. The '*' matches
+                all members of the type specified by the type field.
+            -->
+            <field name="name" type="s"/>
+            <!-- An enumeration describing the type of the member. Values:
+                  0: Any type.
+                  1: Method.
+                  2: Signal.
+                  3: Property.
+            -->
+            <field name="type" type="y"/>
+            <!-- A bitmask describing the action on the member. Values:
+                  0x1: Provide. Allows sending signals and/or exposing
+                       methods and properties.
+                  0x2: Observe. Allows receiving signals and reading properties.
+                  0x4: Modify. Allows setting properties and making method
+                       calls.
+                Note: A rule with none of the bits set (no rights are granted),
+                  is considered as an explicit deny rule.
+            -->
+            <field name="action" type="y"/>
+        </struct>
+
+        <struct name="Rule">
+            <!-- Contains the object path on which the rule applies.
+                An empty object path is allowed. In that case the rules apply
+                on all matching interfaces.
+            -->
+            <field name="objectPath" type="s"/>
+            <!-- Contains the interface name on which the rule applies.
+                An empty interfaceName is allowed, if the objectPath is set.
+                The '*' character is allowed at the end of the interface name.
+                The interface name is then considered a prefix. The rule
+                applies to all interface names starting with that prefix.
+            -->
+            <field name="interfaceName" type="s"/>
+            <field name="members" type="a[Member]"/>
+        </struct>
+
+        <struct name="Peer">
+            <!-- An enumeration describing the type of peer. Values:
+                  0: Anonymous: matches all peers.
+                  1: Any: matches all peers trusted by the application.
+                  2: Restricted: matches all peers with certificates of a
+                     specified certificate authority.
+                  3: Public key: a single peer identified by a public key.
+                  4: Security group: all members of specific security group.
+            -->
+            <field name="type" type="q"/>
+            <!-- Zero or one key depending on the peer type.
+                  Anonymous: No key required.
+                  Any: No key required.
+                  Restricted: The public key of certificate authority.
+                  Public key: The public key of the peer.
+                  Security group: The public key of the security group authority.
+            -->
+            <field name="publicKey" type="a[EccPublicKey]"/>
+            <!-- Only needed for the security group type. Ignored for the other types. -->
+            <field name="groupId" type="[Guid]"/>
+        </struct>
+
+        <struct name="Acl">
+            <field name="peers" type="a[Peer]"/>
+            <field name="rules" type="a[Rule]"/>
+        </struct>
+
+        <!-- The Interface version.-->
+        <property name="Version" access="read" type="q"/>
+
+        <!-- This method is called to grant a security manager delegation rights. -->
+        <method name="GrantDelegationRights">
+            <!-- The provided certificate must be an identity certificate with
+                delegation set to true. Upon receiving this method call the
+                security manager must check if the certificate is acceptable and
+                if the method caller is entitled to give you this permissions.
+
+                The security manager should store this certificate. If it can't
+                do this in a reasonable time, it should return this method call
+                with completed set to false. The caller should keep the session
+                alive and listen for the GrantDelegationRightsCompleted signal.
+            -->
+            <arg name="identityCertificate" type="[Certificate]" direction="in"/>
+            <!-- The ACLs this security manager needs to add to the policies to
+                be able to use this idenity certificate.
+            -->
+            <arg name="requiredPermissions" type="a[Acl]"/>
+            <!-- True if the request was handled inline. false if the request
+                is handled asynchronously.
+            -->
+            <arg name="completed" type="b" direction="out"/>
+        </method>
+
+        <!-- A session cast signal sent when a GrantDelegationRights method
+            running in the background is finished. This signal should only be
+            in the session where the GrantDelegationRights was called in.
+        -->
+        <signal name="GrantDelegationRightsCompleted">
+            <!-- A Qstatus value indicating the result of the method call. -->
+            <arg name="status" type="q"/>
+        </signal>
+
+        <!-- This method is called to grant a security manager delegated
+            membership certificates.
+        -->
+        <method name="GrantMemberships">
+            <!-- The provided certificates must be membership certificates with
+                delegation set to true. Upon recieving this method call the
+                security manager must check if the certificates are acceptable and
+                if the method caller is entitled to give you this permissions.
+
+                The security manager should store the certificates. If he can't
+                do this in a reasonable time, he should return this method call
+                with completed set to false. The caller should keep the session
+                alive and listen for the GrantMembershipsCompleted signal.
+            -->
+            <arg name="membershipCertificates" type="a[Certificate]" direction="in"/>
+            <!-- the ACLs this security manager needs to add to the policies to
+                be able to use this idenity certificate.
+            -->
+            <arg name="requiredPermissions" type="a[Acl]"/>
+            <!-- True if the request was handled inline. false if the request
+                is handled asynchronously.
+            -->
+            <arg name="completed" type="b" direction="out"/>
+        </method>
+
+        <!-- A session cast signal sent when a GrantMemberships method
+            running in the background is finished. This signal should only be
+            in the session where the GrantDelegationRights was called in.
+        -->
+        <signal name="GrantMembershipsCompleted">
+            <!-- A Qstatus value indicating the result of the method call. -->
+            <arg name="status" type="q"/>
+        </signal>
+
+        <!-- Queries the security manger to see if it holds a specific identity
+            certificate. If the manager is unable to answer this query in a timely
+            manner, then it is allowed to answer false even it would have it.
+        -->
+        <method name="HasDelegationRights">
+            <arg name="certificateSerialNumber" type="s" direction="in"/>
+            <arg name="issuerPublicKey" type="[EccPublicKey]" direction="in"/>
+            <arg name="hasCertificate" type="b" direction="out"/>
+        </method>
+
+        <!-- Request the security manager to recieve delegation rigths. -->
+        <method name="RequestDelegationRights">
+            <arg name="rights" type="a[Rule]" direction="in"/>
+            <!-- An enumeration describing the reply. Values:
+                  1: Request denied.
+                  2: Request pending.
+            -->
+            <arg name="reply" type="y" direction="out"/>
+            <!-- The requestId if the request is pending or 0 if the request
+                 is denied.
+                 A requestId is only valid in the Alljoyn session which made
+                 the request.
+            -->
+            <arg name="requestId" type="q" direction="out"/>
+        </method>
+
+        <signal name="DelegationRightsRequestCompleted">
+            <arg name="status" type="q"/>
+            <arg name="certficates" type="a[Certificate]"/>
+            <!-- The ACLs this security manager needs for the groups to
+                equivalence to work as requested.
+            -->
+            <arg name="requiredPermissions" type="a[Acl]"/>
+        </signal>
+
+        <method name="RequestRights">
+            <arg name="rights" type="a[Rule]" direction="in"/>
+            <!-- An enumeration describing the reply. Values:
+                  1: Request denied.
+                  2: Request pending.
+            -->
+            <arg name="reply" type="y" direction="out"/>
+            <!-- The request id if the request is pending or 0 if request
+                 is denied.
+                 A requestId is only valid in Alljoyn session which made the
+                 request.
+            -->
+            <arg name="requestId" type="q" direction="out"/>
+        </method>
+
+        <signal name="RequestRightsCompleted">
+            <arg name="status" type="q"/>
+            <!-- The ACLs this security manager needs add to the policies to
+                be able to use the requested rights.
+            -->
+            <arg name="requiredPermissions" type="a[Acl]"/>
+        </signal>
+
+        <method name="GrantRights">
+            <arg name="rights" type="a[Rule]" direction="in"/>
+            <!-- An enumeration describing the reply. Values:
+                  1: Request denied.
+                  2: Request pending.
+            -->
+            <arg name="reply" type="y" direction="out"/>
+            <!-- The request id if the request is pending or 0 if request
+                 is denied.
+                 A requestId is only valid in Alljoyn session which made the
+                 request.
+            -->
+            <arg name="requestId" type="q" direction="out"/>
+        </method>
+
+        <signal name="GrantRightsCompleted">
+            <arg name="status" type="q"/>
+            <!-- The ACLs this security manager needs for the groups to
+                equivalence to work as requested.
+            -->
+            <arg name="requiredPermissions" type="a[Acl]"/>
+        </signal>
+    </interface>
+</node>
