@@ -1,0 +1,59 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+    <!-- The PskIdentityExchanger interface contains a method to exchange security manager
+        identities between 2 peers. This interface should only be used in a ECDHE_PSK
+        session.
+    -->
+    <interface name="org.alljoyn.Services.Security.PskIdentityExchanger">
+        <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+
+        <!-- A struct providing the details of an Elliptic Curve Cryptography
+            public key.
+        -->
+        <struct name="EccPublicKey">
+            <!-- An enumeration describing the key type. Values:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An enumeration identifying the curve this key is using. Values:
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <struct name="Certificate">
+            <!-- An enumeration representing the encoding of the
+                certificate data. Values:
+                  0: an X.509 DER encoded certificate.
+                  1: an X.509 PEM encoded certificate.
+            -->
+            <field name="encoding" type="y"/>
+            <field name="certificateData" type="ay"/>
+        </struct>
+
+        <struct name="SecurityManagerIdentity">
+           <!-- The public key identifying the security manager. -->
+           <field name="managerPublicKey" type="[EccPublicKey]"/>
+           <!-- The certificate chain identifying the manager or an empty array
+                if the manager doesn't have a certificate or doesn't want to
+                share it.
+           -->
+           <field name="managerIdentityCertificateChain" type="a[Certificate]"/>
+       </struct>
+
+        <!-- The Interface version. -->
+        <property name="Version" access="read" type="q"/>
+
+       <!-- Ask this security manager to exchange identities -->
+       <method name="ExchangeIdentity">
+           <!-- The identity of the requester. -->
+           <arg name="requesterIdentity" type="[SecurityManagerIdentity]" direction="in"/>
+           <!-- The identity of the replier. -->
+           <arg name="replierIdentity" type="[SecurityManagerIdentity]" direction="out"/>
+       </method>
+    </interface>
+</node>
+
