@@ -1,0 +1,53 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+        <!-- The interface provided by all security 2.0 applications
+            for discovery purposes. It is seperated from the Application
+            interface as the ApplicationState interface is not secure,
+            while the Application interface is secure.
+        -->
+        <interface name="org.alljoyn.Bus.Security.ApplicationState">
+        <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+
+        <!-- A struct providing the details of an Elliptic Curve public key.-->
+        <struct name="PublicKey">
+            <!-- An enumeration describing the key type:
+                   0: ECDSA with SHA256
+            -->
+            <field name="algorithm" type="y"/>
+            <!-- An Enumeration identifying the curve this key is using.
+                   0: NIST P-256
+            -->
+            <field name="curveIdentifier" type="y"/>
+            <!-- The X coordinate of the public key.-->
+            <field name="xCoordinate" type="ay"/>
+            <!-- The Y coordinate of the public key.-->
+            <field name="yCoordinate" type="ay"/>
+        </struct>
+
+        <!-- The Interface version.-->
+        <property name="Version" access="read" type="q"/>
+
+        <!-- The State signal is used to advertise the state of an
+            application.  It is sessionless, because the signal is intended
+            to discover the applications. Discovery is not done by using 'About'
+            as pure consumer application might not even bother to send out an
+            signal and even if they did, we don't want to pollute the About info
+            with core framework information.
+        -->
+        <signal name="ClaimState" sessionless="true">
+            <!-- The public key used by this application to identify itself-->
+            <arg name="publicKey" type="yyayay"/>  <!-- type="[PublicKey]" -->
+            <!-- An enumeration representing the current state of the application.
+                Values:
+                  0: Not claimable.  The application is not claimed and not
+                     accepting claim request.
+                  1: Claimable. The application is not claimed, but is
+                     accepting claim request.
+                  2: Claimed. The application is claimed and can be configured.
+                  3: NeedsUpdate. The application is claimed, but requires a
+                     configuration update (after a software upgrade)
+            -->
+            <arg name="claimState" type="q"/>
+        </signal>
+    </interface>
+</node>
+
