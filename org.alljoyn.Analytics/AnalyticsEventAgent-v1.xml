@@ -1,0 +1,24 @@
+
+<?xml version="1.0"?>
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="/Analytics" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name="org.alljoyn.Analytics.AnalyticsEventAgent">
+    <method name="SetDeviceData">
+      <arg name="values" type="a{sv}" direction="in"/>
+    </method>
+    <method name="SetVendorData">
+      <arg name="values" type="a{sv}" direction="in"/>
+    </method>
+    <method name="RequestDelivery"/>
+    <method name="SubmitEvent">
+      <!-- event type -->
+      <arg name="name" type="s" direction="in"/>
+      <!-- epoch timestamp or 0 -->
+      <arg name="timestamp" type="t" direction="in"/>
+      <!-- sequence number, or 0 -->
+      <arg name="sequence" type="u" direction="in"/>
+      <!-- array of field names and values-->
+      <arg name="values" type="a{sv}" direction="in"/>
+    </method>
+    <annotation name="org.alljoyn.Bus.Secure" value="on"/>
+  </interface>
+</node>
