@@ -32,6 +32,7 @@ fairly simple:
 * create a formal XML description of the interface
 * add both to this repository in the appropriate place (see the Structure
   section)
+* make sure the markdown files render correctly to HTML (see below)
 * submit the change to the Allseen Alliance Gerrit infrastructure, in the same
   way as you would do for a code contribution to some project.
 * send an email to allseen-irb@lists.allseenalliance.org, requesting a review of
@@ -41,3 +42,26 @@ The IRB will then provide feedback through the Gerrit tool. The IRB will try to
 provide feedback in at most two weeks. If your interface definition is accepted,
 it will be merged into the interfaces repository. From that point on, it is
 considered a standardized AllJoyn interface.
+
+How To Check The Markdown Rendering
+-----------------------------------
+The IRB makes use of the tooling developed by the webdocs project to render
+markdown files to HTML, and publish them on the Allseen Alliance web site.
+We ask that you verify whether your submission renders correctly with this
+tooling prior to submission for review.
+
+Here is how:
+
+* clone the webdocs repository (preferably next to the interfaces repository):
+  `git clone https://git.allseenalliance.org/gerrit/extras/webdocs`
+* `cd extras/webdocs`
+* perform the necessary setup (installation of node.js and modules) as described
+  in the webdocs README.md file.
+* run the rendering script: `scripts/generate_interfaces.js`. If you cloned the
+  webdocs repository in another location, you'll need to specify the location of
+  the interfaces repository with the `-d` command-line switch.
+* the rendered interface descriptions can be found in `out/public`.
+* run the link checker script: `scripts/linkchecker.js -s /interfaces/index`
+* for easy verification of the HTML rendering, you can start a local web server:
+  `scripts/server.js`. Point your favorite web browser to
+  `http://localhost:8000/` to view the result.
