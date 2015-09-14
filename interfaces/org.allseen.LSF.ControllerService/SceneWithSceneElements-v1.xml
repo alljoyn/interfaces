@@ -1,0 +1,32 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.SceneWithSceneElements'>
+    <description language="en">This interface is provided by the LSF Controller Service to enable the LSF Controller Clients to create, update and lookup Scene with Scene with Scene Elements.</description>
+    <annotation name="org.alljoyn.Bus.Secure" value="false"/>
+    <property name='Version' type='u' access='read'>
+        <description language="en">Interface version</description>
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <method name='CreateSceneWithSceneElements'>
+      <description language="en">This method allows the LSF Controller Clients to create a Scene with Scene Elements.</description>
+      <arg name='sceneElementIDs' type='as' direction='in'/>
+      <arg name='sceneName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateSceneWithSceneElements'>
+      <description language="en">This method allows the LSF Controller Clients to update a Scene with Scene Elements.</description>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='sceneElementIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <method name='GetSceneWithSceneElements'>
+      <description language="en">This method allows the LSF Controller Clients to fetch a Scene with Scene Elements.</description>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </method>
+  </interface>
+</node>
