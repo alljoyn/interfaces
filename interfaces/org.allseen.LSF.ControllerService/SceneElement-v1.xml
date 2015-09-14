@@ -1,0 +1,87 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.SceneElement'>
+    <description language="en">This interface is provided by the LSF Controller Service to enable the LSF Controller Clients to create, update, delete, lookup and apply Scene Elements on Lamps.</description>
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+    <property name='Version' type='u' access='read'>
+        <description language="en">Interface version</description>
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <method name='GetAllSceneElementIDs'>
+      <description language="en">This method allows the LSF Controller Clients to fetch all the Scene Element IDs.</description>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetSceneElementName'>
+      <description language="en">This method allows the LSF Controller Clients to fetch the name of a Scene Element specified by the sceneElementID.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='sceneElementName' type='s' direction='out'/>
+    </method>
+    <method name='SetSceneElementName'>
+      <description language="en">This method allows the LSF Controller Clients to set the name of a Scene Element specified by the sceneElementID.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='sceneElementName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateSceneElement'>
+      <description language="en">This method allows the LSF Controller Clients to create a Scene Element.</description>
+      <arg name='SceneElement' type='asass' direction='in'/>
+      <arg name='sceneElementName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateSceneElement'>
+      <description language="en">This method allows the LSF Controller Clients to update a Scene Element.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='SceneElement' type='asass' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteSceneElement'>
+      <description language="en">This method allows the LSF Controller Clients to delete a Scene Element.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='GetSceneElement'>
+      <description language="en">This method allows the LSF Controller Clients to fetch a Scene Element.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='SceneElement' type='asass' direction='out'/>
+    </method>
+    <method name='ApplySceneElement'>
+      <description language="en">This method allows the LSF Controller Clients to apply a Scene Element.</description>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <signal name='SceneElementsNameChanged' sessioncast="true">
+      <description language="en">The SceneElementsNameChanged signal is used to notify the list of the Scene Element IDs whose names have changed.</description>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsCreated' sessioncast="true">
+      <description language="en">The SceneElementsCreated signal is used to notify the list of the Scene Element IDs that have been created.</description>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsUpdated' sessioncast="true">
+      <description language="en">The SceneElementsCreated signal is used to notify the list of the Scene Element IDs that have been updated.</description>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsDeleted' sessioncast="true">
+      <description language="en">The SceneElementsDeleted signal is used to notify the list of the Scene Element IDs that have been deleted.</description>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsApplied' sessioncast="true">
+      <description language="en">The SceneElementsApplied signal is used to notify the list of the Scene Element IDs that have been applied.</description>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>
