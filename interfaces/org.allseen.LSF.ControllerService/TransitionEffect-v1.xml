@@ -1,0 +1,99 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.TransitionEffect'>
+    <description language="en">This interface is provided by the LSF Controller Service to enable the LSF Controller Clients to create, update, delete, lookup and apply Transition Effects on Lamps.</description>
+    <annotation name="org.alljoyn.Bus.Secure" value="false"/>
+    <property name='Version' type='u' access='read'>
+        <description language="en">Interface version</description>
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+    </property>
+    <method name='GetAllTransitionEffectIDs'>
+      <description language="en">This method allows the LSF Controller Clients to fetch all the Transition Effect IDs.</description>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetTransitionEffectName'>
+      <description language="en">This method allows the LSF Controller Clients to fetch the name of a Transition Effect specified by the transitionEffectID.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='transitionEffectName' type='s' direction='out'/>
+    </method>
+    <method name='SetTransitionEffectName'>
+      <description language="en">	This method allows the LSF Controller Clients to set the name of a Transition Effect specified by the transitionEffectID.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='transitionEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateTransitionEffect'>
+      <description language="en">This method allows the LSF Controller Clients to create a Transition Effect.</description>
+      <arg name='lampState' type='a{sv}' direction='in'/>
+      <arg name='presetID' type='s' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='transitionEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateTransitionEffect'>
+      <description language="en">This method allows the LSF Controller Clients to update a Transition Effect.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampState' type='a{sv}' direction='in'/>
+      <arg name='presetID' type='s' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteTransitionEffect'>
+      <description language="en">This method allows the LSF Controller Clients to delete a Transition Effect.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='GetTransitionEffect'>
+      <description language="en">This method allows the LSF Controller Clients to fetch a Transition Effect.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampState' type='a{sv}' direction='out'/>
+      <arg name='presetID' type='s' direction='out'/>
+      <arg name='transitionPeriod' type='u' direction='out'/>
+    </method>
+    <method name='ApplyTransitionEffectOnLamps'>
+      <description language="en">This method allows the LSF Controller Clients to apply a Transition Effect on a set of Lamps.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampIDs' type='as' direction='out'/>
+    </method>
+    <method name='ApplyTransitionEffectOnLampGroups'>
+      <description language="en">This method allows the LSF Controller Clients to apply a Transition Effect on a set of LampGroups.</description>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampGroupIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampGroupIDs' type='as' direction='out'/>
+    </method>
+    <signal name='TransitionEffectsNameChanged'>
+      <description language="en">The TransitionEffectsNameChanged signal is used to notify the list of the Transition Effect IDs whose names have changed.</description>
+      <arg name='transitionEffectIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsCreated'>
+      <description language="en">The TransitionEffectsCreated signal is used to notify the list of the Transition Effect IDs that have been created.</description>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsUpdated'>
+      <description language="en">The TransitionEffectsUpdated signal is used to notify the list of the Transition Effect IDs that have been updated.</description>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsDeleted'>
+      <description language="en">The TransitionEffectsDeleted signal is used to notify the list of the Transition Effect IDs that have been deleted.</description>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>
