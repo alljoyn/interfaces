@@ -1,0 +1,69 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.SceneElement'>
+  <property name='Version' type='u' access='read'/>
+    <method name='GetAllSceneElementIDs'>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetSceneElementName'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='sceneElementName' type='s' direction='out'/>
+    </method>
+    <method name='SetSceneElementName'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='sceneElementName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateSceneElement'>
+      <arg name='SceneElement' type='asass' direction='in'/>
+      <arg name='sceneElementName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateSceneElement'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='SceneElement' type='asass' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteSceneElement'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <method name='GetSceneElement'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+      <arg name='SceneElement' type='asass' direction='out'/>
+    </method>
+    <method name='ApplySceneElement'>
+      <arg name='sceneElementID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneElementID' type='s' direction='out'/>
+    </method>
+    <signal name='SceneElementsNameChanged'>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsCreated'>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsUpdated'>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsDeleted'>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='SceneElementsApplied'>
+      <arg name='sceneElementIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>

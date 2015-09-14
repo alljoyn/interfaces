@@ -1,0 +1,81 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.TransitionEffect'>
+  <property name='Version' type='u' access='read'/>
+    <method name='GetAllTransitionEffectIDs'>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetTransitionEffectName'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='transitionEffectName' type='s' direction='out'/>
+    </method>
+    <method name='SetTransitionEffectName'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='transitionEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateTransitionEffect'>
+      <arg name='lampState' type='a{sv}' direction='in'/>
+      <arg name='presetID' type='s' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='transitionEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateTransitionEffect'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampState' type='a{sv}' direction='in'/>
+      <arg name='presetID' type='s' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteTransitionEffect'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+    </method>
+    <method name='GetTransitionEffect'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampState' type='a{sv}' direction='out'/>
+      <arg name='presetID' type='s' direction='out'/>
+      <arg name='transitionPeriod' type='u' direction='out'/>
+    </method>
+    <method name='ApplyTransitionEffectOnLamps'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampIDs' type='as' direction='out'/>
+    </method>
+    <method name='ApplyTransitionEffectOnLampGroups'>
+      <arg name='transitionEffectID' type='s' direction='in'/>
+      <arg name='lampGroupIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='transitionEffectID' type='s' direction='out'/>
+      <arg name='lampGroupIDs' type='as' direction='out'/>
+    </method>
+    <signal name='TransitionEffectsNameChanged'>
+      <arg name='transitionEffectIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsCreated'>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsUpdated'>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='TransitionEffectsDeleted'>
+      <arg name='transitionEffectsIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>
