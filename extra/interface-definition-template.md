@@ -76,7 +76,7 @@ Provide information that helps explain the interface. Typically, this includes
 |-----------------------|-----------------------------------------------------------------------|
 | Type                  | Baz                                                                   |
 | Access                | read-only                                                             |
-| Annotation            | org.freedesktop.DBus.Property.EmitsChangedSignal = true               |
+| Annotation            | org.freedesktop.DBus.Property.EmitsChangedSignal = false              |
 | Introduced in version | n (only add this line for n > 1)                                      |
 
 There is room for a long, tedious and incredibly detailed explanation of the property
@@ -100,7 +100,7 @@ here, in multiple paragraphs and with lists if needed.
 |-----------------------|-----------------------------------------------------------------------|
 | Type                  | string                                                                |
 | Access                | read-write                                                            |
-| Annotation            | org.freedesktop.DBus.Property.EmitsChangedSignal = false              |
+| Annotation            | org.freedesktop.DBus.Property.EmitsChangedSignal = true               |
 | Introduced in version | n (only add this line for n > 1)                                      |
 
 Descriptions can be short and sweet, too.

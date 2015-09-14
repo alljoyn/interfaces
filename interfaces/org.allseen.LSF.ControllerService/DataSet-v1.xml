@@ -1,0 +1,22 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.DataSet'>
+    <description language="en">This interface is provided by the LSF Controller Service to enable the LSF Controller Clients to fetch all the Lamp metadata using a single method call.</description>	
+    <annotation name="org.alljoyn.Bus.Secure" value="false"/>
+    <property name='Version' type='u' access='read'>
+        <description language="en">Interface version</description>
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <method name='GetLampDataSet'>
+      <description language="en">This method allows the LSF Controller Clients to fetch all the Lamp metadata.</description>
+      <arg name='lampID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='lampName' type='s' direction='out'/>
+      <arg name='lampDetails' type='a{sv}' direction='out'/>
+      <arg name='lampState' type='a{sv}' direction='out'/>
+      <arg name='lampParameters' type='a{sv}' direction='out'/>
+    </method>
+  </interface>
+</node>
