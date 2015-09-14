@@ -1,0 +1,111 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+  <interface name='org.allseen.LSF.ControllerService.PulseEffect'>
+    <description language="en">This interface is provided by the LSF Controller Service to enable the LSF Controller Clients to create, update, delete, lookup and apply Pulse Effects on Lamps.</description>
+    <annotation name="org.alljoyn.Bus.Secure" value="false"/>
+    <property name='Version' type='u' access='read'>
+        <description language="en">Interface version</description>
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+    </property>
+    <method name='GetAllPulseEffectIDs'>
+      <description language="en">This method allows the LSF Controller Clients to fetch all the Pulse Effect IDs.</description>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetPulseEffectName'>
+      <description language="en">This method allows the LSF Controller Clients to fetch the name of a Pulse Effect specified by the pulseEffectID.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='pulseEffectName' type='s' direction='out'/>
+    </method>
+    <method name='SetPulseEffectName'>
+      <description language="en">This method allows the LSF Controller Clients to set the name of a Pulse Effect specified by the pulseEffectID. </description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='pulseEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreatePulseEffect'>
+      <description language="en">This method allows the LSF Controller Clients to create a Pulse Effect.</description>
+      <arg name='toLampState' type='a{sv}' direction='in'/>
+      <arg name='pulsePeriod' type='u' direction='in'/>
+      <arg name='pulseDuration' type='u' direction='in'/>
+      <arg name='numPulses' type='u' direction='in'/>
+      <arg name='fromLampState' type='a{sv}' direction='in'/>
+      <arg name='toPresetID' type='s' direction='in'/>
+      <arg name='fromPresetID' type='s' direction='in'/>
+      <arg name='pulseEffectName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+    </method>
+    <method name='UpdatePulseEffect'>
+      <description language="en">This method allows the LSF Controller Clients to update a Pulse Effect.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='toLampState' type='a{sv}' direction='in'/>
+      <arg name='pulsePeriod' type='u' direction='in'/>
+      <arg name='pulseDuration' type='u' direction='in'/>
+      <arg name='numPulses' type='u' direction='in'/>
+      <arg name='fromLampState' type='a{sv}' direction='in'/>
+      <arg name='toPresetID' type='s' direction='in'/>
+      <arg name='fromPresetID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+    </method>
+    <method name='DeletePulseEffect'>
+      <description language="en">This method allows the LSF Controller Clients to delete a Pulse Effect.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+    </method>
+    <method name='GetPulseEffect'>
+      <description language="en">This method allows the LSF Controller Clients to fetch a Pulse Effect.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+      <arg name='toLampState' type='a{sv}' direction='out'/>
+      <arg name='pulsePeriod' type='u' direction='out'/>
+      <arg name='pulseDuration' type='u' direction='out'/>
+      <arg name='numPulses' type='u' direction='out'/>
+      <arg name='fromLampState' type='a{sv}' direction='out'/>
+      <arg name='toPresetID' type='s' direction='out'/>
+      <arg name='fromPresetID' type='s' direction='out'/>
+    </method>
+    <method name='ApplyPulseEffectOnLamps'>
+      <description language="en">This method allows the LSF Controller Clients to apply a Pulse Effect on a set of Lamps.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='lampIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+      <arg name='lampIDs' type='as' direction='out'/>
+    </method>
+    <method name='ApplyPulseEffectOnLampGroups'>
+      <description language="en">This method allows the LSF Controller Clients to apply a Pulse Effect on a set of LampGroups.</description>
+      <arg name='pulseEffectID' type='s' direction='in'/>
+      <arg name='lampGroupIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='pulseEffectID' type='s' direction='out'/>
+      <arg name='lampGroupIDs' type='as' direction='out'/>
+    </method>
+    <signal name='PulseEffectsNameChanged' sessioncast="true">
+      <description language="en">The PulseEffectsNameChanged signal is used to notify the list of the Pulse Effect IDs whose names have changed.</description>
+      <arg name='pulseEffectIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='PulseEffectsCreated' sessioncast="true">
+      <description language="en">The PulseEffectsCreated signal is used to notify the list of the Pulse Effect IDs that have been created.</description>
+      <arg name='pulseEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='PulseEffectsUpdated' sessioncast="true">
+      <description language="en">The PulseEffectsUpdated signal is used to notify the list of the Pulse Effect IDs that have been updated.</description>
+      <arg name='pulseEffectsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='PulseEffectsDeleted' sessioncast="true">
+      <description language="en">The PulseEffectsDeleted signal is used to notify the list of the Pulse Effect IDs that have been deleted.</description>
+      <arg name='pulseEffectsIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>
