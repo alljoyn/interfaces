@@ -1,0 +1,24 @@
+<node>
+  <interface name='org.allseen.LeaderElectionAndStateSync'>
+    <property name='Version' type='u' access='read'/>
+    <method name='GetChecksumAndModificationTimestamp'>
+      <arg name='checksumAndTimestamp' type='a(uut)' direction='out'/>
+    </method>
+    <method name='GetBlob'>
+      <arg name='blobType' type='u' direction='in'/>
+      <arg name='blobType' type='u' direction='out'/>
+      <arg name='blob' type='s' direction='out'/>
+      <arg name='checksum' type='u' direction='out'/>
+      <arg name='timestamp' type='t' direction='out'/>
+    </method>
+    <method name='Overthrow'>
+      <arg name='success' type='b' direction='out'/>
+    </method>
+    <signal name='BlobChanged'>
+      <arg name='blobType' type='u' direction='out'/>
+      <arg name='blob' type='s' direction='out'/>
+      <arg name='checksum' type='u' direction='out'/>
+      <arg name='timestamp' type='t' direction='out'/>
+    </signal>
+  </interface>
+</node>
