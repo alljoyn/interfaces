@@ -1,0 +1,28 @@
+<node>
+  <interface name='org.allseen.LSF.LampState'>
+    <property name='Version' type='u' access='read'/>
+    <property name='OnOff' type='b' access='read'/>
+    <property name='Hue' type='u' access='read'/>
+    <property name='Saturation' type='u' access='read'/>
+    <property name='ColorTemp' type='u' access='read'/>
+    <property name='Brightness' type='u' access='read'/>
+    <method name='TransitionLampState'>
+      <arg name='Timestamp' type='t' direction='in'/>
+      <arg name='NewState' type='a{sv}' direction='in'/>
+      <arg name='TransitionPeriod' type='u' direction='in'/>
+      <arg name='LampResponseCode' type='u' direction='out'/>
+    </method>
+    <method name='ApplyPulseEffect'>
+      <arg name='FromState' type='a{sv}' direction='in'/>
+      <arg name='ToState' type='a{sv}' direction='in'/>
+      <arg name='period' type='u' direction='in'/>
+      <arg name='duration' type='u' direction='in'/>
+      <arg name='numPulses' type='u' direction='in'/>
+      <arg name='timestamp' type='t' direction='in'/>
+      <arg name='LampResponseCode' type='u' direction='out'/>
+    </method>
+    <signal name='LampStateChanged'>
+      <arg name='LampID' type='s' direction='out'/>
+    </signal>
+  </interface>
+</node>
