@@ -1,0 +1,119 @@
+<node>
+  <interface name='org.allseen.LSF.ControllerService.LampGroup'>
+  <property name='Version' type='u' access='read'/>
+    <method name='GetAllLampGroupIDs'>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetLampGroupName'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='lampGroupName' type='s' direction='out'/>
+    </method>
+    <method name='SetLampGroupName'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='lampGroupName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateLampGroup'>
+      <arg name='lampIDs' type='as' direction='in'/>
+      <arg name='lampGroupIDs' type='as' direction='in'/>
+      <arg name='lampGroupName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateLampGroup'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='lampIDs' type='as' direction='in'/>
+      <arg name='lampGroupIDs' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteLampGroup'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='GetLampGroup'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+      <arg name='lampIDs' type='as' direction='out'/>
+      <arg name='lampGroupIDs' type='as' direction='out'/>
+    </method>
+    <method name='TransitionLampGroupState'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='lampState' type='a{sv}' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='PulseLampGroupWithState'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='fromLampGroupState' type='a{sv}' direction='in'/>
+      <arg name='toLampGroupState' type='a{sv}' direction='in'/>
+      <arg name='period' type='u' direction='in'/>
+      <arg name='duration' type='u' direction='in'/>
+      <arg name='numPulses' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='PulseLampGroupWithPreset'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='fromPresetID' type='s' direction='in'/>
+      <arg name='toPresetID' type='s' direction='in'/>
+      <arg name='period' type='u' direction='in'/>
+      <arg name='duration' type='u' direction='in'/>
+      <arg name='numPulses' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='TransitionLampGroupStateToPreset'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='presetID' type='s' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='TransitionLampGroupStateField'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='lampGroupStateFieldName' type='s' direction='in'/>
+      <arg name='lampGroupStateFieldValue' type='v' direction='in'/>
+      <arg name='transitionPeriod' type='u' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+      <arg name='lampGroupStateFieldName' type='s' direction='out'/>
+    </method>
+    <method name='ResetLampGroupState'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+    </method>
+    <method name='ResetLampGroupStateField'>
+      <arg name='lampGroupID' type='s' direction='in'/>
+      <arg name='lampGroupStateFieldName' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='lampGroupID' type='s' direction='out'/>
+      <arg name='lampGroupStateFieldName' type='s' direction='out'/>
+    </method>
+    <signal name='LampGroupsNameChanged'>
+      <arg name='lampGroupsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='LampGroupsCreated'>
+      <arg name='lampGroupsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='LampGroupsUpdated'>
+      <arg name='lampGroupsIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='LampGroupsDeleted'>
+      <arg name='lampGroupsIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>

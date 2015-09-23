@@ -1,0 +1,7 @@
+<node>
+  <interface name='org.allseen.LSF.LampParameters'>
+    <property name='Version' type='u' access='read'/>
+    <property name='Energy_Usage_Milliwatts' type='u' access='read'/>
+    <property name='Brightness_Lumens' type='u' access='read'/>
+  </interface>
+</node>
