@@ -1,0 +1,24 @@
+<node>
+  <interface name='org.allseen.LSF.LampDetails'>
+    <property name='Version' type='u' access='read'/>
+    <property name='Make' type='u' access='read'/>
+    <property name='Model' type='u' access='read'/>
+    <property name='Type' type='u' access='read'/>
+    <property name='LampType' type='u' access='read'/>
+    <property name='LampBaseType' type='u' access='read'/>
+    <property name='LampBeamAngle' type='u' access='read'/>
+    <property name='Dimmable' type='b' access='read'/>
+    <property name='Color' type='b' access='read'/>
+    <property name='VariableColorTemp' type='b' access='read'/>
+    <property name='HasEffects' type='b' access='read'/>
+    <property name='MinVoltage' type='u' access='read'/>
+    <property name='MaxVoltage' type='u' access='read'/>
+    <property name='Wattage' type='u' access='read'/>
+    <property name='IncandescentEquivalent' type='u' access='read'/>
+    <property name='MaxLumens' type='u' access='read'/>
+    <property name='MinTemperature' type='u' access='read'/>
+    <property name='MaxTemperature' type='u' access='read'/>
+    <property name='ColorRenderingIndex' type='u' access='read'/>
+    <property name='LampID' type='s' access='read'/>
+  </interface>
+</node>

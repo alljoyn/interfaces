@@ -1,0 +1,13 @@
+<node>
+  <interface name='org.allseen.LSF.ControllerService'>
+  <property name='Version' type='u' access='read'/>
+    <method name='LightingResetControllerService'>
+      <arg name='responseCode' type='u' direction='out'/>
+    </method>
+    <method name='GetControllerServiceVersion'>
+      <arg name='version' type='u' direction='out'/>
+    </method>
+    <signal name='ControllerServiceLightingReset'>
+    </signal>
+  </interface>
+</node>

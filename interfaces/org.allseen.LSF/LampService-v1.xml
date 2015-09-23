@@ -1,0 +1,12 @@
+<node>
+  <interface name='org.allseen.LSF.LampService'>
+    <property name='Version' type='u' access='read'/>
+    <property name='LampServiceVersion' type='u' access='read'/>
+    <property name='LampFaults' type='au' access='read'/>
+    <method name='ClearLampFault'>
+      <arg name='LampFaultCode' type='u' direction='in'/>
+      <arg name='LampResponseCode' type='u' direction='out'/>
+      <arg name='LampFaultCode' type='u' direction='out'/>
+    </method>
+  </interface>
+</node>
