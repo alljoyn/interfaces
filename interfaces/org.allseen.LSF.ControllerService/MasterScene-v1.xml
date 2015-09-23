@@ -1,0 +1,69 @@
+<node>
+  <interface name='org.allseen.LSF.ControllerService.MasterScene'>
+  <property name='Version' type='u' access='read'/>
+    <method name='GetAllMasterSceneIDs'>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetMasterSceneName'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='masterSceneName' type='s' direction='out'/>
+    </method>
+    <method name='SetMasterSceneName'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='masterSceneName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateMasterScene'>
+      <arg name='scenes' type='as' direction='in'/>
+      <arg name='masterSceneName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateMasterScene'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='scenes' type='as' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteMasterScene'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+    </method>
+    <method name='GetMasterScene'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+      <arg name='scenes' type='as' direction='out'/>
+    </method>
+    <method name='ApplyMasterScene'>
+      <arg name='masterSceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='masterSceneID' type='s' direction='out'/>
+    </method>
+    <signal name='MasterScenesNameChanged'>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='MasterScenesCreated'>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='MasterScenesUpdated'>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='MasterScenesDeleted'>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='MasterScenesApplied'>
+      <arg name='masterSceneIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>

@@ -1,0 +1,78 @@
+<node>
+  <interface name='org.allseen.LSF.ControllerService.Scene'>
+  <property name='Version' type='u' access='read'/>
+    <method name='GetAllSceneIDs'>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </method>
+    <method name='GetSceneName'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+      <arg name='sceneName' type='s' direction='out'/>
+    </method>
+    <method name='SetSceneName'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='sceneName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+      <arg name='language' type='s' direction='out'/>
+    </method>
+    <method name='CreateScene'>
+      <arg name='transitionlampsLampGroupsToState' type='a(asasa{sv}u)' direction='in'/>
+      <arg name='transitionlampsLampGroupsToPreset' type='a(asassu)' direction='in'/>
+      <arg name='pulselampsLampGroupsWithState' type='a(asasa{sv}a{sv}uuu)' direction='in'/>
+      <arg name='pulselampsLampGroupsWithPreset' type='a(asasssuuu)' direction='in'/>
+      <arg name='sceneName' type='s' direction='in'/>
+      <arg name='language' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <method name='UpdateScene'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='transitionlampsLampGroupsToState' type='a(asasa{sv}u)' direction='in'/>
+      <arg name='transitionlampsLampGroupsToPreset' type='a(asassu)' direction='in'/>
+      <arg name='pulselampsLampGroupsWithState' type='a(asasa{sv}a{sv}uuu)' direction='in'/>
+      <arg name='pulselampsLampGroupsWithPreset' type='a(asasssuuu)' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <method name='DeleteScene'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <method name='GetScene'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+      <arg name='transitionlampsLampGroupsToState' type='a(asasa{sv}u)' direction='out'/>
+      <arg name='transitionlampsLampGroupsToPreset' type='a(asassu)' direction='out'/>
+      <arg name='pulselampsLampGroupsWithState' type='a(asasa{sv}a{sv}uuu)' direction='out'/>
+      <arg name='pulselampsLampGroupsWithPreset' type='a(asasssuuu)' direction='out'/>
+    </method>
+    <method name='ApplyScene'>
+      <arg name='sceneID' type='s' direction='in'/>
+      <arg name='responseCode' type='u' direction='out'/>
+      <arg name='sceneID' type='s' direction='out'/>
+    </method>
+    <signal name='ScenesNameChanged'>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='ScenesCreated'>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='ScenesUpdated'>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='ScenesDeleted'>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </signal>
+    <signal name='ScenesApplied'>
+      <arg name='sceneIDs' type='as' direction='out'/>
+    </signal>
+  </interface>
+</node>
