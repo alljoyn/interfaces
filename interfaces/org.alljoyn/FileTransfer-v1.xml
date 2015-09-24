@@ -1,0 +1,40 @@
+<node  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.FileTransfer">      
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides methods for performing chunky file transfers</description>
+      
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+      
+      <property name="MaxWriteLength" type="u" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The total amount of write space available in bytes.</description>
+      </property>
+      
+      <method name="StartChunkWrite">
+        <description language="en">Method that starts a chunky write data transfer from a consumer to a producer</description>
+        <arg name="length" type="u" direction="in"/>
+        <arg name="chunkSize" type="u" direction="out"/>
+      </method>
+
+      <method name="WriteNextChunk">
+        <description language="en">Method that writes the next sequential chunk of data from a consumer to a producer</description>
+        <arg name="buffer" type="ay" direction="in"/>
+      </method>
+
+      <method name="StartChunkRead">
+        <description language="en">Method that starts a chunky read data transfer from a producer to a consumer</description>
+        <arg name="length" type="u" direction="out"/>
+        <arg name="chunkSize" type="u" direction="out"/>
+      </method>
+
+      <method name="ReadNextChunk">
+        <description language="en">Method that returns the next sequential chunk of data from a producer to a consumer</description>
+        <arg name="buffer" type="ay" direction="out"/>
+      </method>
+
+   </interface>
+</node>
