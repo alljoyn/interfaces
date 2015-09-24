@@ -1,0 +1,29 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.FileTransfer.Read">      
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides methods for performing chunky file reads</description>
+      
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+            
+      <method name="StartChunkRead">
+        <description language="en">Method that starts a chunky read data transfer from a producer to a consumer.</description>
+        <arg name="requestedChunkSize" type="u" direction="in"/>
+        <arg name="length" type="u" direction="out"/>
+        <arg name="chunkSize" type="u" direction="out"/>
+      </method>
+
+      <method name="ReadNextChunk">
+        <description language="en">Method that returns the next sequential chunk of data from a producer to a consumer.</description>
+        <arg name="buffer" type="ay" direction="out"/>
+      </method>
+      
+      <method name="StopChunkRead">
+        <description language="en">Method that terminates the in progress read operation of the current session.</description>        
+      </method>      
+
+   </interface>
+</node>
