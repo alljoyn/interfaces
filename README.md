@@ -10,8 +10,8 @@ This repository is structured as follows:
   * /: the root of the repository. Contains this README file.
     * extra/: some auxiliary information and tooling
     * interfaces/: the standardized interface definitions
-      * org.allseen.Foo/: contains the interface definitions for namespace
-                          org.allseen.Foo
+      * org.alljoyn.Foo/: contains the interface definitions for namespace
+                          org.alljoyn.Foo
         * Bar-v1.xml: the formal interface definition for org.allseen.Foo.Bar v1
         * Bar-v1.md: the textual description of org.allseen.Foo.Bar v1
         * theory-of-operation.md: an overall Theory of Operation document that 
