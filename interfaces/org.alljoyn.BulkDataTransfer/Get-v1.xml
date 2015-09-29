@@ -1,0 +1,20 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.BulkDataTransfer.Get">
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides the Get operation for retrieving bulk data.</description>
+
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+
+      <method name="Get">
+        <description language="en">Retrieves a block of data.</description>
+        <arg name="startOffset" type="t" direction="in"/>
+        <arg name="size" type="u" direction="in"/>
+        <arg name="dataSegement" type="ay" direction="out"/>
+      </method>
+
+   </interface>
+</node>
