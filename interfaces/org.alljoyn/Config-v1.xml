@@ -1,0 +1,57 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://www.allseenalliance.org/schemas/introspect.xsd" >
+  <interface name="org.alljoyn.Config">
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+    <description language="en">This interface defines the Config functionality.</description>
+
+    <property name="Version" type="q" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The interface version number.</description>
+    </property>
+
+    <method name="FactoryReset">
+      <description language="en">Directs the device to disconnect from
+      the personal AP, clear all previously configured data, and start
+      the softAP mode.</description>
+   <annotation name="org.freedesktop.DBus.Method.NoReply" value="true"/>
+    </method>
+
+    <method name="Restart">
+      <description language="en">Method to restart device.</description>
+      <annotation name="org.freedesktop.DBus.Method.NoReply" value="true"/>
+    </method>
+
+    <method name="SetPasscode">
+      <description language="en">Updates the passcode to be used for
+      the org.alljoyn.Config interface which is secure. The default
+      passcode is 000000 until it is overwritten by
+      SetPasscode.</description>
+      <arg name="daemonRealm" type="s" direction="in"/>
+      <arg name="newPasscode" type="ay" direction="in"/>
+    </method>
+
+    <method name="GetConfigurations">
+      <description language="en">Returns all the configurable fields
+      specified within the scope of the Config interface. If language
+      tag is not specified (i.e., ""), configuration fields based on
+      the device's default language are returned.</description>
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="configData" type="a{sv}" direction="out"/>
+    </method>
+
+    <method name="UpdateConfigurations">
+      <description language="en">Provides a mechanism to update the
+      configuration fields.</description>
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="configMap" type="a{sv}" direction="in"/>
+    </method>
+
+    <method name="ResetConfigurations">
+      <description language="en">Provides a mechanism to reset (i.e.,
+      value is restored to factory default but the field itself is
+      retained) values of configuration fields.</description>
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="fieldList" type="as" direction="in"/>
+    </method>
+  </interface>
+</node>
