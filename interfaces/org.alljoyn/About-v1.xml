@@ -1,0 +1,31 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://www.allseenalliance.org/schemas/introspect.xsd" >
+  <interface name="org.alljoyn.About">
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+    <description language="en">This interface defines the About functionality.</description>
+
+    <property name="Version" type="q" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The interface version number.</description>
+    </property>
+
+    <method name="GetAboutData">
+      <description language="en">Method to retrieve About data.</description>
+      <arg name="languageTag" type="s" direction="in"/>
+      <arg name="aboutData" type="a{sv}" direction="out"/>
+    </method>
+
+    <method name="GetObjectDescription">
+      <description language="en">Method to retrieve About object description.</description>
+      <arg name="objectDescription" type="a(oas)" direction="out"/>
+    </method>
+
+    <signal name="Announce" sessionless='true'>
+      <description language="en">The About sessionless signal</description>
+      <arg name="version" type="q"/>
+      <arg name="port" type="q"/>
+      <arg name="objectDescription" type="a(oas)"/>
+      <arg name="metaData" type="a{sv}"/>
+    </signal>
+  </interface>
+</node>
