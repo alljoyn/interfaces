@@ -1,0 +1,51 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://www.allseenalliance.org/schemas/introspect.xsd" >
+  <interface name="org.alljoyn.Onboarding">
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+    <description language="en">This interface defines the Onboarding functionality.</description>
+  
+    <property name="Version" type="q" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The interface version number.</description>
+    </property>
+
+    <property name="State" type="n" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The configuration state.</description>
+    </property>
+
+    <property name="LastError" type="(ns)" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The last error code and error message. Error_message is the error message received from the underlying Wi-Fi layer.</description>
+    </property>
+
+    <method name="ConfigureWifi">
+      <description language="en">Sends the personal AP information to the onboardee.</description>
+      <arg name="SSID" type="s" direction="in"/>
+      <arg name="passphrase" type="s" direction="in"/>
+      <arg name="authType" type="n" direction="in"/>
+      <arg name="status" type="n" direction="out"/>
+    </method>
+
+    <method name="Connect">
+      <description language="en">Tells the onboardee to connect to the personal AP. It is recommended that the onboardee use the concurrency feature, if it is available.</description>
+      <annotation name="org.freedesktop.DBus.Method.NoReply" value="true" />
+    </method>
+
+    <method name="Offboard">
+      <description language="en">Tells the onboardee to disconnect from the personal AP, clear the personal AP configuration fields, and start the soft AP mode.</description>
+      <annotation name="org.freedesktop.DBus.Method.NoReply" value="true" />
+    </method>
+
+    <method name="GetScanInfo">
+      <description language="en">Scans all the Wi-Fi access points in the onboardee's proximity.</description>
+      <arg name="age" type="q" direction="out"/>
+      <arg name="scanList" type="a(sn)" direction="out"/>
+    </method>
+
+    <signal name="ConnectionResult" sessioncast='true'>
+      <description language="en">This signal is emitted when the connection attempt against the personal AP is completed.</description>
+      <arg name="result" type="(ns)"/>
+    </signal>
+  </interface>
+</node>

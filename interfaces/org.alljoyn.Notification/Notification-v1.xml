@@ -1,0 +1,26 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://www.allseenalliance.org/schemas/introspect.xsd" >
+  <interface name="org.alljoyn.Notification">
+    <annotation name="org.alljoyn.Bus.Secure" value="off"/>
+    <description language="en">This interface defines the Notification signal.</description>
+
+    <property name="Version" type="q" access="read">
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+      <description language="en">The interface version number.</description>
+    </property>
+
+    <signal name="notify" sessionless='true'>
+      <description language="en">The Notification signal.</description>
+      <arg name="version" type="q"/>
+      <arg name="msgId" type="i"/>
+      <arg name="msgType" type="q"/>
+      <arg name="deviceId" type="s"/>
+      <arg name="deviceName" type="s"/>
+      <arg name="appId" type="ay"/>
+      <arg name="appName" type="s"/>
+      <arg name="attributes" type="a{iv}"/>
+      <arg name="customAttributes" type="a{ss}"/>
+      <arg name="langText" type="a(ss)"/>
+    </signal>
+  </interface>
+</node>
