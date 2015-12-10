@@ -1,0 +1,65 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.Multimedia.PlayQueue">
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides to means to manage a multimedia play queue.</description>
+
+      <struct name="QueueEntry">
+        <field name="sourceBusName" type="s"/>
+        <field name="mediaUri" type="s"/>
+        <field name="salt" type="u"/>
+      </struct>
+
+      <struct name="MediaReference">
+        <field name="sourceBusName" type="s"/>
+        <field name="mediaUri" type="s"/>
+      </struct>
+
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+
+      <property name="PlayQueueSequence" type="u" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The current state of the play queue.</description>
+      </property>
+
+      <property name="QueueSize" type="u" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The number of entries in the play queue.</description>
+      </property>
+
+      <method name="GetQueueEntries">
+        <description language="en">Get a list of entries on the play queue.</description>
+        <arg name="startIndex" type="u" direction="in"/>
+        <arg name="count" type="u" direction="in"/>
+        <arg name="playQueueSequence" type="u" direction="out"/>
+        <arg name="queueData" type="aQueueEntry" direction="out"/>
+      </method>
+
+      <method name="Add">
+        <description language="en">Add media to the play queue.</description>
+        <arg name="playQueueSequence" type="u" direction="in"/>
+        <arg name="mediaReferences" type="aMediaReference" direction="in"/>
+        <arg name="position" type="u" direction="in"/>
+        <arg name="oldPlayQueueSequence" type="u" direction="out"/>
+      </method>
+
+      <method name="Remove">
+        <description language="en">Remove media from the play queue.</description>
+        <arg name="playQueueSequence" type="u" direction="in"/>
+        <arg name="entries" type="aQueueEntry" direction="in"/>
+        <arg name="oldPlayQueueSequence" type="u" direction="out"/>
+      </method>
+
+      <method name="Move">
+        <description language="en">Move media within the play queue.</description>
+        <arg name="playQueueSequence" type="u" direction="in"/>
+        <arg name="entries" type="aQueueEntry" direction="in"/>
+        <arg name="position" type="u" direction="in"/>
+        <arg name="oldPlayQueueSequence" type="u" direction="out"/>
+      </method>
+
+   </interface>
+</node>
