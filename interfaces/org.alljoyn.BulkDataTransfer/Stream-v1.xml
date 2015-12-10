@@ -1,0 +1,38 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.BulkDataTransfer.Stream">
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides the Stream operation for delivering bulk data.</description>
+
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+
+      <property name="PayloadSize" type="t" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">Streaming payload size.</description>
+      </property>
+
+      <property name="Pause" type="t" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">Streaming pause state.</description>
+      </property>
+
+      <property name="CurrentPosition" type="x" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">Current position in the data stream.</description>
+      </property>
+
+      <method name="Start">
+        <description language="en">Starts the data stream.</description>
+      </method>
+
+      <signal name="Payload" sessioncast='true'>
+        <description language="en">Delivers a block of data.</description>
+        <arg name="offset" type="x"/>
+        <arg name="dataSegement" type="ay"/>
+      </signal>
+
+   </interface>
+</node>
