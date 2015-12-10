@@ -3,10 +3,10 @@
 ## Theory of Operation
 
 The interfaces defined under org.alljoyn.BulkDataTransfer enable the transfer of
-large, arbitrary datasets.  Ultimately there are 2 kinds of bulk data transfer:
+large, arbitrary datasets.  There are 2 kinds of data that can be transferred:
 
-  * Bounded - typically a file of finite size
-  * Unbounded - typically a stream of data of indeterminate size
+  * **Bounded** - typically a file of finite size
+  * **Unbounded** - typically a stream of data of indeterminate size
 
 It is expected that there will be some sort of data/media/file discovery and
 selection mechanism that will be used to select the data to be transfered.  Such
@@ -41,16 +41,33 @@ to be secured, that security will be applied to the bus objects that implement
 the BulkDataTransfer interface since it is the contents represented by the bus
 object that needs to be protected.
 
+There are 2 different means for transferring data:
 
-### Bounded bulk data transfer
+  * **Random access** - This method allows a client direct control over what
+    data is delivered and when.  It is restricted to working only with bounded
+    data transfers.  Each client accessing the same data set has independent
+    control over the data that gets transferred.  This is best for
+    copying/moving files.  This does not require that the server understand the
+    data being transferred.
+  * **Streaming** - This method allows a server to deliver the same data to one
+    or more clients simultaneously under control of the server.  This can be
+    used for both bounded and unbounded data.  Auxiliary interfaces may provide
+    clients with indirect control of the streamed data, but any usage of such
+    interfaces would affect all recipients of the streamed data.  This is best
+    for live data and delivery to multiple consumers where loss of data is not a
+    critical failure.  Often, this will require the sender to have some
+    understanding of the data being sent.
 
-Bulk data transfers of bounded data are typically backed by a file or data store
-of some sort.  This can have certain data race implications for scenarios that
-support both writing and reading.  This theory of operation cannot mandate
-specific behavior in such a case since different scenarios may have their own
-required behavior that must be followed.  Such behavioral requirements are
-expected to be defined in the theory of operation for the data/media/file
-discovery and selection mechanism to which the usage scenario applies.
+### Random access bulk data transfer
+
+Random access bulk data transfers of bounded data are typically backed by a
+file or data store of some sort.  This can have certain data race implications
+for scenarios that support both writing and reading.  This theory of operation
+cannot mandate specific behavior in such a case since different scenarios may
+have their own required behavior that must be followed.  Such behavioral
+requirements are expected to be defined in the theory of operation for the
+data/media/file discovery and selection mechanism to which the usage scenario
+applies.
 
 In the cases where the usage scenario does not dictate the behavior, it is
 recommend that the following behavior be adopted.  There are effectively 6
@@ -111,13 +128,48 @@ writing.  All writes would go to this temporary file.  When all opened
 references to the file have been closed, then it can be moved appropriately in
 the underlying filesystem.
 
-### Unbounded bulk data transfer
+### Streaming bulk data transfer
 
-_This section intentionally left blank.  It is to be filled when the unbounded
-bulk data transfer interfaces are defined._
+Streaming bulk data transfer is very different in nature from random access bulk
+data transfer.  Many of the differences are noted below:
+
+  * The data transferred may be either bounded or unbounded.
+  * The data is always read only - it can only be transferred from the producer
+    to the consumer.
+  * The same data segment may be delivered to multiple consumers at the same
+    time.
+  * The data is typically delivered at a predictable rate depending on the
+    nature of the data and the applications implementing this functionality.
+
+Bounded data that is streamed will typically be backed by a file while unbounded
+data that is streamed will typically come from some kind of live source or other
+data stream.  Examples of sources for unbounded data include baby monitors,
+webcams, video surveillance, audio/video capture, Internet media streams, etc.
+
+All clients receiving data from a given bus object will always get the same data
+delivered to each client.  If a client needs an independent stream for the same
+data, then a new bus object will need to be created.  This means that a bus
+object created for a stream represents the stream more than it represents the
+underlying data.
+
+Some implementations of data streams may support seeking to alternate positions
+within a given stream.  There are 2 forms of seeking possible: relative and
+absolute.  It is possible for a stream to support relative seeking but not
+absolute seek.  However, any stream that supports absolute seeking is perfectly
+capable of supporting relative seeking.  Thus, 2 seeking interfaces are defined
+to support relative and absolute seeking.
+
+An example of a device that only supports relative seeking would be something
+that records X amount of history from a live data source.  A live data source by
+its very nature does not have any absolute positions but a device that records X
+amount of history can seek back up to X distance into the past.
+
 
 ## References
 
  * The description of the [Information interface](Information-v1)
  * The description of the [Get interface](Get-v1)
  * The description of the [Put interface](Put-v1)
+ * The description of the [Stream interface](Stream-v1)
+ * The description of the [StreamSeek interface](StreamSeek-v1)
+ * The description of the [StreamSeekAbsolute interface](StreamSeekAbsolute-v1)
