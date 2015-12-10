@@ -1,0 +1,88 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.Multimedia.SourceDiscovery">
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides to means to discover streamable media on a server.</description>
+
+      <struct name="SortSpec">
+        <field name="sortField" type="s"/>
+        <field name="direction" type="b"/>
+      </struct>
+
+      <dictionary name="MetadataDictionary">
+        <field name="key" type="s"/>
+        <field name="value" type="v"/>
+      </dictionary>
+
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+
+      <property name="SortingSpec" type="aSortSpec" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">The sorting specification.</description>
+      </property>
+
+      <property name="SortableItems" type="as" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">The sorting specification.</description>
+      </property>
+
+      <property name="SearchFilter" type="as" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">Media metadata search criteria.</description>
+      </property>
+
+      <property name="MimeTypeFilter" type="as" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">Media MIME type filter.</description>
+      </property>
+
+      <property name="MetadataFilter" type="as" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">Media metadata filter.</description>
+      </property>
+
+      <property name="MatchCount" type="u" access="readwrite">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+        <description language="en">Number of media entries matching search and filter criteria.</description>
+      </property>
+
+      <method name="GetAttributeValues">
+        <description language="en">Get a list of attribute values.</description>
+        <arg name="attribute" type="s" direction="in"/>
+        <arg name="index" type="u" direction="in"/>
+        <arg name="size" type="u" direction="in"/>
+        <arg name="attributeValues" type="av" direction="out"/>
+      </method>
+
+      <method name="GetMetadataList">
+        <description language="en">Get the metadata for a range of media.</description>
+        <arg name="index" type="u" direction="in"/>
+        <arg name="size" type="u" direction="in"/>
+        <arg name="attributes" type="as" direction="in"/>
+        <arg name="metadataList" type="aMetdataDictionary" direction="out"/>
+      </method>
+
+      <method name="GetMetadata">
+        <description language="en">Get the metadata for a specific media.</description>
+        <arg name="mediaUri" type="s" direction="in"/>
+        <arg name="attributes" type="as" direction="in"/>
+        <arg name="metadata" type="MetdataDictionary" direction="out"/>
+      </method>
+
+
+      <signal name="MetadataChanged" sessioncast='true'>
+        <description language="en">Informs device of an available update.</description>
+        <arg name="mediaUri" type="s" direction="out"/>
+      </signal>
+
+      <signal name="MediaDatabaseChanged" sessioncast='true'>
+        <description language="en">Informs device of an available update.</description>
+        <arg name="added" type="u" direction="out"/>
+        <arg name="removed" type="u" direction="out"/>
+      </signal>
+
+   </interface>
+</node>

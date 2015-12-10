@@ -1,0 +1,24 @@
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.allseenalliance.org/schemas/introspect.xsd">
+   <interface name="org.alljoyn.Multimedia.SourceSelection">
+      <annotation name="org.alljoyn.Bus.Secure" value="true"/>
+      <description language="en">This interface provides to means to create a bus object that can stream media.</description>
+
+      <property name="Version" type="q" access="read">
+        <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="true"/>
+        <description language="en">The interface version number.</description>
+      </property>
+
+      <method name="OpenUpdate">
+        <description language="en">Creates a bus object for streaming media.</description>
+        <arg name="mediaUri" type="s" direction="in"/>
+        <arg name="busObjectPath" type="o" direction="out"/>
+      </method>
+
+      <method name="CloseUpdate">
+        <description language="en">Closes a bus object that can stream media.</description>
+        <arg name="busObjectPath" type="o" direction="in"/>
+      </method>
+
+   </interface>
+</node>
