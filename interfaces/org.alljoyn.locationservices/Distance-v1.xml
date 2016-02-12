@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+  <interface name="org.alljoyn.locationservices.Distance.Distance">
+    <description language="en" >
+      This interface contains methods for applications to access the data of the distance service
+    </description>		
+    <property name="Version" type="q" access="read">
+      <description language="en">Interface Version</description>
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+    </property>
+    <annotation name="org.alljoyn.Bus.Secure" value="true" />
+
+    <struct name="Entity">
+      <description language="en">
+        Generic representation of a device
+      </description>
+      <field name="entityDescriptor" type="s"/>
+      <field name="entityMac" type="s"/>
+    </struct>
+
+    <struct name="DistanceEntity" >
+      <description language="en">
+        Distance services representation of device information
+      </description>
+      <field name="entity" type="[Entity]"/>
+      <field name="distance" type="d" />
+      <field name="distanceMultiplier" type="i" />
+      <field name="accuracy" type="i" />
+      <field name="accuracyMultiplier" type="i" />
+    </struct>
+
+    <struct name="DistanceFilter">
+      <description language="en">
+        Service settings along with selection criteria for specifying entities of interest
+      </description>
+      <!-- the reference entity is the entity from which distances to other entites are measured -->
+      <field name="referenceEntity" type="[Entity]"/>    
+      <!-- the entity parser is an entity filled with regular expressions for matching --> 
+      <field name="entityParser" type="[Entity]"/>
+      <!-- The entity list is a list of entities for matching -->
+      <field name="entityList" type="a[Entity]"/>
+    </struct>
+
+    <method name="DistanceSubscribe">
+      <description language="en">
+        Subscribe for events that occur when firstEntity and secondEntity are in distance.
+        Events are only sent again if the distance change is  more than deltaDistance (measured in cm)
+      </description>
+      <arg name="distanceFilter" type="[DistanceFilter]" direction="in"/>
+      <arg name="distanceDelta" type="d" direction="in"/>
+      <arg name="distanceTracker" type="o" direction="out"/>
+    </method>
+
+    <method name="QueryDistance">
+      <description language="en">
+        Query for distance information based on the supplied filter
+      </description>
+      <arg name="distanceFilter" type="[DistanceFilter]" direction="in"/>
+      <arg name="distanceEntites" type="a[DistanceEntity]" direction="out"/>
+    </method>
+
+  </interface>
+</node>
