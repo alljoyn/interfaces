@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<node xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://www.alljoyn.org/schemas/introspect.xsd">
+  <interface name="org.alljoyn.locationservices.Geofence.Geofence">
+    <description language="en" >
+      This interface contains methods for applications to access geofence services data
+    </description>		
+    <property name="Version" type="q" access="read">
+      <description language="en">Interface Version</description>
+      <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
+    </property>
+    <annotation name="org.alljoyn.Bus.Secure" value="true" />
+
+    <struct name="Entity">
+      <description language="en">
+        Generic representation of a device
+      </description>
+      <field name="entityDescriptor" type="s"/>
+      <field name="entityMac" type="s"/>
+    </struct>
+
+    <struct name="GeofenceEntity">
+      <description language="en">
+        Geofence services representation of device information
+      </description>
+      <field name="entity" type="[Entity]"/>
+      <field name="withinFenceline" type="b"/>
+    </struct>
+
+    <struct name="GeofenceFilter">
+      <description language="en">
+        Service settings along with selection criteria for specifying entities of interest
+      </description>
+      <!-- the reference fenceline is the distance around the reference entity that forms the geofence boundary -->
+      <field name="referenceFenceline" type="d"/>    
+      <!-- the reference entity is the entity from which distances to other entites are measured -->
+      <field name="referenceEntity" type="[Entity]"/>    
+      <!-- the entity parser is an entity filled with regular expressions for matching --> 
+      <field name="entityParser" type="[Entity]"/>
+      <!-- The entity list is a list of entities for matching -->
+      <field name="entityList" type="a[Entity]"/>
+    </struct>
+
+    <method name="GeofenceSubscribe">
+      <description language="en">
+        Request fenceline tracking based on the supplied filter
+      </description>
+      <arg name="geofenceFilter" type="[GeofenceFilter]" direction="in"/>
+      <arg name="geofenceTracker" type="o" direction="out"/>
+    </method>
+
+    <method name="QueryGeofence">
+      <description language="en">
+        Query for fenceline crossing information based on the supplied filter
+      </description>
+      <arg name="geofenceFilter" type="[GeofenceFilter]" direction="in"/>
+      <arg name="geofenceEntities" type="a[GeofenceEntity]" direction="out"/>
+    </method>
+
+  </interface>
+</node>
