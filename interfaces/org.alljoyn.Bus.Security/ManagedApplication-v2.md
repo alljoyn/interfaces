@@ -41,15 +41,15 @@ The interface version number.
 
 The identify certificate chain.
 
-#### Manifest
+#### Manifests
 
 |            |                                                          |
 |------------|----------------------------------------------------------|
-| Type       | Rule[]                                                   |
+| Type       | Manifest[]                                               |
 | Access     | read-only                                                |
 | Annotation | org.freedesktop.DBus.Property.EmitsChangedSignal = false |
 
-The manifest.
+The manifests.
 
 #### IdentityCertificateId
 
@@ -124,16 +124,17 @@ Errors raised by this method:
   * org.alljoyn.Bus.Security.Error.PermissionDenied --- Error raised when the
     caller does not have permission.
 
-#### UpdateIdentity(certificateChain, manifest)
+#### UpdateIdentity(certificateChain, manifests)
 
 This method allows an admin to update the application's identity certificate
-chain and its manifest.
+chain and installed manifests. Any previously installed manifests are cleared
+before the new manifests are installed.
 
 Input arguments:
 
   * **certificateChain** --- Certificate[] --- the identity certificate
   chain
-  * **manifest** --- Rule[] --- the application manifest
+  * **manifests** --- Manifest[] --- the signed manifests
 
 Output arguments: None.
 
@@ -145,9 +146,8 @@ Errors raised by this method:
     identity certificate chain is not valid
   * org.alljoyn.Bus.Security.Error.InvalidCertificateUsage --- Error raised when
     the Extended Key Usage is not AllJoyn specific
-  * org.alljoyn.Bus.Security.Error.DigestMismatch --- Error raised when the
-    digest of the manifest does not match the digest listed in the identity
-    certificate
+  * org.alljoyn.Bus.Security.Error.DigestMismatch --- Error raised when none of
+    the supplied manifests are valid for the identity certificate provided
 
 #### UpdatePolicy(policy)
 
@@ -224,6 +224,25 @@ Errors raised by this method:
   * org.alljoyn.Bus.Security.Error.CertificateNotFound --- Error raised when the
   certificate is not found
 
+#### InstallManifests(manifests)
+
+This method allows an admin to install one or more signed manifests to the application.
+These manifests are added to any existing manifests previously installed through
+calls to Claim, UpdateIdentity, or InstallManifests.
+
+Input arguments:
+
+  * **manifest** --- Manifest[] --- one or more signed manifests to be installed.
+
+Output arguments: None.
+
+Errors raised by this method:
+
+  * org.alljoyn.Bus.Security.Error.PermissionDenied --- Error raised when the
+    caller does not have permission.
+  * org.alljoyn.Bus.Security.Error.DigestMismatch --- Error raised when none
+    of the manifests provided are valid for this peer.
+  
 #### StartManagement()
 
 This method allows an admin to notify the application about the fact that
@@ -352,6 +371,18 @@ This struct represents a basic certificate identifier
   * **serialNumber** --- ay --- the certificate serial number
   * **aki** --- ay --- the issuer authority key identifier
   * **issuer** --- EccPublicKey --- the public key of the issuer
+
+#### struct Manifest
+
+This struct represents a signed manifest.
+
+  * **version** --- u --- version number of this manifest (currently 1)
+  * **rules** --- Rule[] --- the permissions granted by this manifest
+  * **thumbprintAlgorithm** --- s --- OID of the algorithm used to compute certificateThumbprint
+  * **certificateThumbprint** --- ay --- thumbprint of the certificate which can use this Manifest
+  * **signatureAlgorithm** --- s --- OID algorithm used to sign this manifest
+  * **signature** --- ay --- digital signature by the certificate's issuer over rules,
+    thumbprintAlgorithm, certificateThumbprint, and signatureAlgorithm.
 
 ## References
 

@@ -140,6 +140,18 @@
             -->
             <field name="acls" type="a[Acl]"/>
         </struct>
+          
+        <struct name="Manifest">
+            <field name="version" type="u" />
+            <field name="rules" type="a[Rule]" />
+            <field name="thumbprintAlgorithm" type="s" />
+            <field name="certificateThumbprint" type="ay" />
+            <field name="signatureAlgorithm" type="s" />
+            <!-- signature is computed over the rules, thumbprintAlgorithm, certificateThumbprint,
+                 and signatureAlgorithm in that order.
+             -->
+            <field name="signature" type="ay" />
+        </struct>
 
         <!-- The Interface version.-->
         <property name="Version" access="read" type="q">
@@ -163,7 +175,8 @@
                  allowed but not efficient since they will be evaluated multiple
                  times.
             -->
-            <arg name="manifest" type="a[Rule]" direction="in"/>
+            <arg name="manifests" type="a[Manifest]" direction="in" />
+            
         </method>
 
         <!-- Notifies the managed application that its security settings are
@@ -184,7 +197,7 @@
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
         </property>
 
-        <property name="Manifest" access="read" type="a[Rule]">
+        <property name="Manifests" access="read" type="a[Manifest]">
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
         </property>
 
@@ -240,6 +253,13 @@
         <property name="MembershipSummaries" access="read" type="a[CertificateId]">
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
         </property>
+        
+        <method name="InstallManifests">
+          <!-- One or more signed manifests.
+           -->
+          <arg name="Manifests" type="a[Manifest]" direction="in"/>
+        </method>
+        
     </interface>
 </node>
 
