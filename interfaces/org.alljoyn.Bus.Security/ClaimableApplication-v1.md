@@ -29,7 +29,7 @@ The interface version number.
 
 ### Methods
 
-#### Claim(certificateAuthority, authorityKeyIdentifier, adminSecurityGroupId, adminSecurityGroupAuthority, adminGroupAuthorityKeyIdentifier, identityCertificateChain, manifest)
+#### Claim(certificateAuthority, authorityKeyIdentifier, adminSecurityGroupId, adminSecurityGroupAuthority, adminGroupAuthorityKeyIdentifier, identityCertificateChain, manifests)
 
 This method allows an admin to claim the application to enable the permission
 enforcement. Members of the admin security group are allowed
@@ -49,7 +49,7 @@ certificate authority public key.
   * **identityCertificateChain** --- Certificate[] --- the identity certificate
   chain for the claimed app.  It can be a single cert if it is issued by the
   certificate authority.
-  * **manifest** --- Rule[] --- the manifest.
+  * **manifests** --- Manifest[] --- the signed manifests.
 
 Output arguments: None
 
@@ -61,10 +61,8 @@ Errors raised by this method:
     identity certificate chain is not valid
   * org.alljoyn.Bus.Security.Error.InvalidCertificateUsage --- Error raised
     when the Extended Key Usage is not AllJoyn specific
-  * org.alljoyn.Bus.Security.Error.DigestMismatch --- Error raised when the
-    digest of the manifest does not match the digest listed in the identity
-    certificate
-
+  * org.alljoyn.Bus.Security.Error.DigestMismatch --- Error raised when none
+    of the manifests provided are valid for this peer.
 
 ### Named Types
 
@@ -76,7 +74,7 @@ Refer to Application interface description for the definition of this struct.
 
 Refer to Application interface description for the definition of this struct.
 
-#### struct Rule
+#### struct Manifest
 
 Refer to ManagedApplication interface description for the definition of this struct.
 
