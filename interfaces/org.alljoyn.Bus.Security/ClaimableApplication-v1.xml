@@ -115,7 +115,8 @@
                 Duplicates are allowed but not efficient since they will be
                 evaluated multiple times.
             -->
-            <arg name="manifest" type="a[Rule]" direction="in"/>
+            <arg name="manifests" type="a[Manifest]" direction="in" />
+            
         </method>
     </interface>
 </node>
