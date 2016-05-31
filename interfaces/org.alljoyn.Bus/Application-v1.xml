@@ -9,7 +9,7 @@
             The interface is not secure.
         -->
         <interface name="org.alljoyn.Bus.Application">
-        <annotation name="org.alljoyn.Bus.Secure" value="false"/>
+        <annotation name="org.alljoyn.Bus.Secure" value="off"/>
 
         <!-- A struct providing the details of an Elliptic Curve Cryptography
             public key.

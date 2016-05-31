@@ -83,6 +83,18 @@
             <field name="members" type="a[Member]"/>
         </struct>
 
+        <struct name="Manifest">
+            <field name="version" type="u" />
+            <field name="rules" type="a[Rule]" />
+            <field name="thumbprintAlgorithm" type="s" />
+            <field name="certificateThumbprint" type="ay" />
+            <field name="signatureAlgorithm" type="s" />
+            <!-- signature is computed over the rules, thumbprintAlgorithm, certificateThumbprint,
+                 and signatureAlgorithm in that order.
+             -->
+            <field name="signature" type="ay" />
+        </struct>
+
         <!-- The Interface version.-->
         <property name="Version" access="read" type="q">
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
@@ -115,7 +127,8 @@
                 Duplicates are allowed but not efficient since they will be
                 evaluated multiple times.
             -->
-            <arg name="manifest" type="a[Rule]" direction="in"/>
+            <arg name="manifests" type="a[Manifest]" direction="in" />
+
         </method>
     </interface>
 </node>
