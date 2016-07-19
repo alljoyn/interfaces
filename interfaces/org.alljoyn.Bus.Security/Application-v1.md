@@ -88,7 +88,7 @@ If no manufacturer certificate is available then this is an empty array.
 
 |            |                                                          |
 |------------|----------------------------------------------------------|
-| Type       | Rule[]                                                   |
+| Type       | ManifestTemplateRule[]                                   |
 | Access     | read-only                                                |
 | Annotation | org.freedesktop.DBus.Property.EmitsChangedSignal = false |
 
