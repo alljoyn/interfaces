@@ -90,6 +90,32 @@
             <field name="members" type="a[Member]"/>
         </struct>
 
+        <struct name="ManifestTemplateRule">
+            <!-- contains the required object path on which the rule applies.
+            The '*' character is allowed at the end of the object path.
+            The object path is then considered a prefix. The rule
+            applies to all object paths starting with the prefix.
+        -->
+            <field name="objectPath" type="s"/>
+            <!-- contains the required interface name on which the rule applies.
+            The '*' character is allowed at the end of the interface name.
+            The interface name is then considered a prefix. The rule
+            applies to all interfaces names starting with the prefix.
+        -->
+            <field name="interfaceName" type="s"/>
+            <!-- The order of the members is not significant.  Duplicates are
+            allowed but not efficient since they will be evaluated multiple
+            times.
+        -->
+            <field name="recommendedSecurityLevel" type="y"/>
+            <!-- One of three recommended security levels:
+                    - PRIVILEGED(0) - default value;
+                    - NON_PRIVILEGED(1);
+                    - UNAUTHENTICATED(2);
+        -->
+            <field name="members" type="a[Member]"/>
+        </struct>
+
         <!-- The Interface version.-->
         <property name="Version" access="read" type="q">
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
@@ -138,7 +164,7 @@
         <!-- A property containing the permissions expressed as rules this
             application requires to operate.
         -->
-        <property name="ManifestTemplate" access="read" type="a[Rule]">
+        <property name="ManifestTemplate" access="read" type="a[ManifestTemplateRule]">
             <annotation name="org.freedesktop.DBus.Property.EmitsChangedSignal" value="false"/>
         </property>
 

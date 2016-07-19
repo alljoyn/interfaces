@@ -88,7 +88,7 @@ If no manufacturer certificate is available then this is an empty array.
 
 |            |                                                          |
 |------------|----------------------------------------------------------|
-| Type       | Rule[]                                                   |
+| Type       | ManifestTemplateRule[]                                   |
 | Access     | read-only                                                |
 | Annotation | org.freedesktop.DBus.Property.EmitsChangedSignal = false |
 
@@ -159,6 +159,22 @@ This struct represents a digest
 #### struct Rule
 
 Refer to ManagedApplication interface description for the definition of this struct.
+
+#### struct ManifestTemplateRule
+
+This struct represents the manifest template rule.
+
+  * **obj** --- string --- the object path
+  * **ifn** --- string --- the interface name
+  * **recommendedSecurityLevel** --- byte --- the security level recommended for this interface.
+  Current values are:
+
+| Value | Name             | Description                                                          |
+|-------|------------------|----------------------------------------------------------------------|
+| 0     | PRIVILEGED       | Default value. Interface should be accessed by privileged user only. |
+| 1     | NON_PRIVILEGED   | Interface could be accessed by all authenticated users.              |
+| 2     | UNAUTHENTICATED  | Interface could be accessed by all users.                            |
+  * **mbrs** --- Member[] --- the interface members
 
 ### Interface Errors
 
